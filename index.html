@@ -3,28 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EuroLatam Pay — Cotizador Ejecutivo para Clientes</title>
+  <title>Cotizador Simple — Envíos Europa a Suramérica</title>
   <style>
     /* =====================================================================
-       VARIABLES DE DISEÑO INSTITUCIONAL Y REINICIO BASE
+       VARIABLES VISUALES Y ESTILOS BASE (DISEÑO CLARO Y DE ALTO CONTRASTE)
        ===================================================================== */
     :root {
+      --navy-950: #0b1324;
       --navy-900: #0f172a;
       --navy-800: #1e293b;
+      --blue-700: #1d4ed8;
+      --blue-50: #eff6ff;
+      --blue-200: #bfdbfe;
       --slate-700: #334155;
+      --slate-600: #475569;
       --slate-500: #64748b;
-      --slate-400: #94a3b8;
       --slate-200: #e2e8f0;
       --slate-100: #f1f5f9;
       --slate-50: #f8fafc;
       --white: #ffffff;
+      --emerald-800: #065f46;
       --emerald-700: #047857;
       --emerald-600: #059669;
+      --emerald-500: #10b981;
       --emerald-100: #d1fae5;
       --emerald-50: #ecfdf5;
       --amber-800: #92400e;
       --amber-200: #fde68a;
       --amber-50: #fffbeb;
+      --radius-xl: 20px;
       --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
@@ -54,985 +61,73 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Alineación tabular estricta para todas las cifras financieras */
     .tabular-nums {
       font-variant-numeric: tabular-nums;
     }
 
-    /* =====================================================================
-       ENCABEZADO CORPORATIVO
-       ===================================================================== */
-    .site-header {
-      background-color: var(--navy-900);
-      color: var(--white);
-      border-bottom: 1px solid var(--navy-800);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      box-shadow: var(--shadow-sm);
-    }
-
     .container {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-    }
-
-    .header-inner {
-      min-height: 4.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 0.875rem;
-    }
-
-    .brand-mark {
-      width: 2.625rem;
-      height: 2.625rem;
-      border-radius: 11px;
-      background: linear-gradient(135deg, var(--emerald-600), var(--emerald-700));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    }
-
-    .brand-title {
-      font-size: 1.1875rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .brand-title span.accent {
-      color: #34d399;
-    }
-
-    .brand-badge {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background-color: var(--navy-800);
-      color: #cbd5e1;
-      padding: 0.2rem 0.55rem;
-      border-radius: 6px;
-      border: 1px solid #334155;
-    }
-
-    .brand-subtitle {
-      font-size: 0.75rem;
-      color: var(--slate-400);
-      margin-top: 0.1rem;
-    }
-
-    .header-meta {
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .header-meta-label {
-      display: block;
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--slate-400);
-      font-weight: 600;
-    }
-
-    .header-meta-value {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: #e2e8f0;
+      padding-left: 1.125rem;
+      padding-right: 1.125rem;
     }
 
     /* =====================================================================
-       CONTENIDO PRINCIPAL Y BANNER DE 3 ETAPAS OPERATIVAS
+       ENCABEZADO LIMPIO CON INSIGNIA DE OFERTA
        ===================================================================== */
-    .main-content {
-      flex: 1;
-      padding-top: 1.75rem;
-      padding-bottom: 2.5rem;
+    .header {
+      background-color: var(--navy-900);
+      color: var(--white);
+      padding: 1.375rem 0 1.625rem;
+      border-bottom: 1px solid var(--navy-800);
     }
 
-    .hero-bar {
+    .header-top {
       display: flex;
       flex-wrap: wrap;
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
     }
 
-    .hero-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--navy-900);
-      letter-spacing: -0.025em;
-      line-height: 1.25;
-    }
-
-    .hero-desc {
-      font-size: 0.9375rem;
-      color: var(--slate-700);
-      margin-top: 0.25rem;
-    }
-
-    .status-pill {
+    .brand-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 0.85rem;
-      border-radius: 999px;
-      background-color: var(--emerald-50);
-      border: 1px solid var(--emerald-100);
-      color: var(--emerald-600);
-      font-size: 0.75rem;
+      gap: 0.55rem;
+      font-size: 0.8125rem;
       font-weight: 700;
+      color: #cbd5e1;
+      letter-spacing: 0.01em;
     }
 
-    .status-dot {
-      width: 0.5rem;
-      height: 0.5rem;
-      border-radius: 50%;
-      background-color: var(--emerald-600);
-    }
-
-    /* Banner de 3 Etapas Institucionales */
-    .stages-banner {
-      background-color: var(--white);
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-lg);
-      padding: 1.125rem;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 1.75rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.875rem;
-    }
-
-    @media (min-width: 768px) {
-      .hero-title {
-        font-size: 1.75rem;
-      }
-      .stages-banner {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 1.25rem;
-        gap: 1rem;
-      }
-    }
-
-    .stage-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.875rem;
-      padding: 0.875rem 1rem;
-      border-radius: var(--radius-md);
-      background-color: var(--slate-50);
-      border: 1px solid var(--slate-200);
-    }
-
-    .stage-card.stage-final {
-      background-color: var(--emerald-50);
-      border-color: #a7f3d0;
-    }
-
-    .stage-num {
-      width: 1.75rem;
-      height: 1.75rem;
+    .brand-icon {
+      width: 1.875rem;
+      height: 1.875rem;
       border-radius: 8px;
-      background-color: var(--navy-900);
-      color: var(--white);
-      font-size: 0.75rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-
-    .stage-card.stage-final .stage-num {
-      background-color: var(--emerald-600);
-    }
-
-    .stage-title {
-      font-size: 0.8125rem;
-      font-weight: 700;
-      color: var(--navy-900);
-    }
-
-    .stage-card.stage-final .stage-title {
-      color: var(--emerald-700);
-    }
-
-    .stage-text {
-      font-size: 0.75rem;
-      color: var(--slate-500);
-      margin-top: 0.2rem;
-      line-height: 1.4;
-    }
-
-    .stage-card.stage-final .stage-text {
-      color: #065f46;
-    }
-
-    /* =====================================================================
-       LAYOUT RESPONSIVO DE 2 COLUMNAS (CONFIGURACIÓN + RESUMEN EJECUTIVO)
-       ===================================================================== */
-    .workspace-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    @media (min-width: 992px) {
-      .workspace-grid {
-        grid-template-columns: 1.05fr 0.95fr;
-        gap: 2rem;
-      }
-    }
-
-    .card {
-      background-color: var(--white);
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .card-body {
-      padding: 1.375rem;
-    }
-
-    @media (min-width: 640px) {
-      .card-body {
-        padding: 1.75rem;
-      }
-    }
-
-    .form-section + .form-section {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--slate-200);
-    }
-
-    .section-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--slate-500);
-      margin-bottom: 0.625rem;
-    }
-
-    .label-hint {
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: normal;
-      color: var(--slate-500);
-    }
-
-    /* Tabs de Cálculo Bidireccional */
-    .mode-tabs {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-      background-color: var(--slate-50);
-      padding: 0.375rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--slate-200);
-    }
-
-    @media (min-width: 540px) {
-      .mode-tabs {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .mode-tab {
-      appearance: none;
-      border: 1px solid transparent;
-      background: transparent;
-      border-radius: 9px;
-      padding: 0.75rem 0.875rem;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      font-family: inherit;
-    }
-
-    .mode-tab:hover:not(.active) {
-      background-color: rgba(255, 255, 255, 0.8);
-      border-color: var(--slate-200);
-    }
-
-    .mode-tab.active {
-      background-color: var(--navy-900);
-      color: var(--white);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .mode-tab-title {
-      display: block;
-      font-size: 0.8125rem;
-      font-weight: 700;
-      color: var(--navy-900);
-    }
-
-    .mode-tab.active .mode-tab-title {
-      color: var(--white);
-    }
-
-    .mode-tab-sub {
-      display: block;
-      font-size: 0.7rem;
-      color: var(--slate-500);
-      margin-top: 0.15rem;
-    }
-
-    .mode-tab.active .mode-tab-sub {
-      color: #cbd5e1;
-    }
-
-    /* Input Numérico Principal */
-    .amount-input-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .amount-input {
-      width: 100%;
-      font-family: inherit;
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--navy-900);
-      background-color: var(--slate-50);
-      border: 2px solid var(--slate-200);
-      border-radius: var(--radius-md);
-      padding: 0.875rem 5.5rem 0.875rem 1rem;
-      outline: none;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
-    }
-
-    .amount-input:focus {
-      background-color: var(--white);
-      border-color: var(--navy-900);
-    }
-
-    .currency-tag {
-      position: absolute;
-      right: 0.75rem;
-      background-color: var(--navy-900);
-      color: var(--white);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      padding: 0.45rem 0.75rem;
-      border-radius: var(--radius-sm);
-      pointer-events: none;
-    }
-
-    /* Botones Rápidos de Monto */
-    .quick-amounts {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.65rem;
-    }
-
-    .quick-label {
-      font-size: 0.75rem;
-      color: var(--slate-500);
-      margin-right: 0.25rem;
-    }
-
-    .quick-btn {
-      appearance: none;
-      font-family: inherit;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--slate-700);
-      background-color: var(--slate-50);
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-sm);
-      padding: 0.35rem 0.65rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .quick-btn:hover {
-      background-color: var(--slate-100);
-      border-color: var(--slate-400);
-      color: var(--navy-900);
-    }
-
-    /* Selectores y Campos de Texto */
-    .select-wrap {
-      position: relative;
-    }
-
-    .form-select,
-    .form-input {
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.875rem;
-      color: var(--navy-900);
-      background-color: var(--slate-50);
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-md);
-      padding: 0.75rem 0.95rem;
-      outline: none;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
-    }
-
-    .form-select {
-      appearance: none;
-      font-weight: 600;
-      padding-right: 2.5rem;
-      cursor: pointer;
-    }
-
-    .form-select:focus,
-    .form-input:focus {
-      background-color: var(--white);
-      border-color: var(--navy-900);
-    }
-
-    .select-chevron {
-      position: absolute;
-      right: 0.875rem;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--slate-500);
-      display: flex;
-    }
-
-    /* Control de Tasa Cambiaria Local Opcional */
-    .fx-box {
-      margin-top: 0.875rem;
-      padding: 0.875rem 1rem;
-      background-color: var(--slate-50);
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-md);
-    }
-
-    .fx-box-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-
-    .fx-current-pill {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--emerald-600);
-      background-color: var(--emerald-50);
-      border: 1px solid #a7f3d0;
-      padding: 0.25rem 0.6rem;
-      border-radius: 6px;
-    }
-
-    .link-btn {
-      appearance: none;
-      background: none;
-      border: none;
-      font-family: inherit;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--slate-700);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      cursor: pointer;
-      padding: 0.25rem 0;
-    }
-
-    .link-btn:hover {
-      color: var(--navy-900);
-    }
-
-    .fx-custom-controls {
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
-      border-top: 1px dashed var(--slate-200);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.625rem;
-    }
-
-    .fx-custom-input {
-      width: 9.5rem;
-      font-family: inherit;
-      font-size: 0.875rem;
-      font-weight: 700;
-      color: var(--navy-900);
-      background-color: var(--white);
-      border: 1px solid var(--slate-400);
-      border-radius: var(--radius-sm);
-      padding: 0.45rem 0.65rem;
-      outline: none;
-    }
-
-    .fx-custom-input:focus {
-      border-color: var(--navy-900);
-    }
-
-    .btn-mini {
-      appearance: none;
-      font-family: inherit;
-      font-size: 0.75rem;
-      font-weight: 600;
-      background-color: var(--white);
-      color: var(--slate-700);
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-sm);
-      padding: 0.45rem 0.7rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .btn-mini:hover {
-      background-color: var(--slate-100);
-      color: var(--navy-900);
-    }
-
-    .two-col-inputs {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.875rem;
-    }
-
-    @media (min-width: 540px) {
-      .two-col-inputs {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .field-label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--slate-700);
-      margin-bottom: 0.35rem;
-    }
-
-    /* =====================================================================
-       TARJETA DERECHA: RESUMEN EJECUTIVO DE COTIZACIÓN
-       ===================================================================== */
-    .quote-card {
-      background-color: var(--white);
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-    }
-
-    .quote-header {
-      background-color: var(--navy-900);
-      color: var(--white);
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    .quote-tag-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .quote-tag {
-      font-size: 0.6875rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #34d399;
-    }
-
-    .quote-ref {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #cbd5e1;
-      background-color: var(--navy-800);
-      padding: 0.15rem 0.5rem;
-      border-radius: 5px;
-      border: 1px solid #334155;
-    }
-
-    .quote-title {
-      font-size: 1.0625rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-top: 0.25rem;
-    }
-
-    .quote-date-box {
-      text-align: right;
-    }
-
-    .quote-date-lbl {
-      display: block;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--slate-400);
-    }
-
-    .quote-date-val {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #e2e8f0;
-    }
-
-    .quote-client-bar {
-      background-color: var(--slate-50);
-      border-bottom: 1px solid var(--slate-200);
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 0.5rem 1.25rem;
-      font-size: 0.8125rem;
-    }
-
-    .meta-item span.k {
-      color: var(--slate-500);
-    }
-
-    .meta-item span.v {
-      font-weight: 700;
-      color: var(--navy-900);
-      margin-left: 0.25rem;
-    }
-
-    .quote-body {
-      padding: 1.375rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    @media (min-width: 640px) {
-      .quote-body {
-        padding: 1.75rem;
-      }
-    }
-
-    /* Alerta de Monto Mínimo */
-    .warning-banner {
-      background-color: var(--amber-50);
-      border: 1px solid var(--amber-200);
-      border-radius: var(--radius-md);
-      padding: 0.875rem 1rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      font-size: 0.8125rem;
-      color: var(--amber-800);
-    }
-
-    .warning-banner strong {
-      display: block;
-      font-weight: 700;
-    }
-
-    /* Tabla de Métricas Financieras */
-    .metrics-list {
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-md);
-      background-color: var(--slate-50);
-      padding: 0 1.125rem;
-    }
-
-    .metric-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.95rem 0;
-    }
-
-    .metric-row + .metric-row {
-      border-top: 1px solid var(--slate-200);
-    }
-
-    .metric-name {
-      font-size: 0.875rem;
-      font-weight: 700;
-      color: var(--navy-900);
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-    }
-
-    .badge-all-in {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      background-color: #e2e8f0;
-      color: var(--slate-700);
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-    }
-
-    .metric-sub {
-      font-size: 0.75rem;
-      color: var(--slate-500);
-      margin-top: 0.15rem;
-    }
-
-    .metric-val-group {
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .metric-val-lg {
-      font-size: 1.1875rem;
-      font-weight: 800;
-      color: var(--navy-900);
-    }
-
-    .metric-val-md {
-      font-size: 0.9375rem;
-      font-weight: 700;
-      color: var(--navy-900);
-    }
-
-    .metric-val-sub {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--slate-500);
-      margin-top: 0.1rem;
-    }
-
-    .rate-pill {
-      display: inline-block;
-      font-size: 0.8125rem;
-      font-weight: 700;
-      color: var(--navy-900);
-      background-color: var(--white);
-      border: 1px solid var(--slate-200);
-      padding: 0.35rem 0.65rem;
-      border-radius: var(--radius-sm);
-    }
-
-    /* Bloque Destacado en Verde Esmeralda: Monto Neto Garantizado */
-    .net-payout-box {
-      background: linear-gradient(135deg, var(--emerald-50) 0%, #d1fae5 100%);
-      border: 2px solid #6ee7b7;
-      border-radius: var(--radius-lg);
-      padding: 1.375rem;
-    }
-
-    .net-payout-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--emerald-700);
-    }
-
-    .net-payout-main {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.5rem;
-      margin-top: 0.625rem;
-    }
-
-    .net-payout-amount {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--emerald-600);
-      letter-spacing: -0.025em;
-      line-height: 1.15;
-      word-break: break-word;
-    }
-
-    @media (min-width: 640px) {
-      .net-payout-amount {
-        font-size: 2.25rem;
-      }
-    }
-
-    .net-payout-currency {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--emerald-700);
-      background-color: rgba(255, 255, 255, 0.85);
-      border: 1px solid #a7f3d0;
-      padding: 0.3rem 0.65rem;
-      border-radius: 6px;
-    }
-
-    .net-payout-note {
-      margin-top: 0.875rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid rgba(5, 150, 105, 0.2);
-      font-size: 0.75rem;
-      color: #065f46;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-    }
-
-    /* Botones de Exportación y Acción */
-    .actions-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.625rem;
-    }
-
-    @media (min-width: 540px) {
-      .actions-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .actions-grid .btn-primary {
-        grid-column: span 2;
-      }
-    }
-
-    .btn {
-      appearance: none;
-      font-family: inherit;
-      font-size: 0.875rem;
-      font-weight: 700;
-      border-radius: var(--radius-md);
-      padding: 0.825rem 1rem;
+      background: linear-gradient(135deg, var(--emerald-500), var(--emerald-700));
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background-color: var(--navy-900);
       color: var(--white);
-      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
     }
 
-    .btn-primary:hover {
-      background-color: var(--navy-800);
-    }
-
-    .btn-secondary {
-      background-color: var(--white);
-      color: var(--navy-900);
-      border-color: var(--slate-200);
-    }
-
-    .btn-secondary:hover {
-      background-color: var(--slate-50);
-      border-color: var(--slate-400);
-    }
-
-    .btn-ghost {
-      background-color: var(--slate-50);
-      color: var(--slate-700);
-      border-color: var(--slate-200);
-    }
-
-    .btn-ghost:hover {
-      background-color: var(--slate-100);
-      color: var(--navy-900);
-    }
-
-    /* Pie de Página */
-    .site-footer {
-      background-color: var(--white);
-      border-top: 1px solid var(--slate-200);
-      padding: 1.25rem 0;
-      font-size: 0.75rem;
-      color: var(--slate-500);
-    }
-
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
+    .offer-badge-top {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    .footer-brand {
-      font-weight: 700;
-      color: var(--navy-900);
-    }
-
-    /* Notificación Toast */
-    .toast-container {
-      position: fixed;
-      bottom: 1.25rem;
-      right: 1.25rem;
-      z-index: 50;
-      display: flex;
-      flex-direction: column;
       gap: 0.5rem;
-      pointer-events: none;
-    }
-
-    .toast {
-      background-color: var(--navy-900);
-      color: var(--white);
-      border-left: 4px solid var(--emerald-600);
-      border-radius: var(--radius-md);
-      padding: 0.85rem 1.15rem;
+      background-color: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #6ee7b7;
+      padding: 0.42rem 0.9rem;
+      border-radius: 999px;
       font-size: 0.8125rem;
-      font-weight: 600;
-      box-shadow: var(--shadow-md);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      font-weight: 700;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .toast-dot {
+    .offer-dot {
       width: 0.5rem;
       height: 0.5rem;
       border-radius: 50%;
@@ -1040,59 +135,878 @@
       flex-shrink: 0;
     }
 
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--white);
+      line-height: 1.25;
+    }
+
+    .header-subtitle {
+      font-size: 0.9375rem;
+      color: #cbd5e1;
+      margin-top: 0.375rem;
+      max-width: 48rem;
+      line-height: 1.45;
+    }
+
+    @media (min-width: 768px) {
+      .header-title {
+        font-size: 1.875rem;
+      }
+      .header-subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    /* =====================================================================
+       CUERPO PRINCIPAL
+       ===================================================================== */
+    .main {
+      flex: 1;
+      padding: 1.5rem 0 2.75rem;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (min-width: 960px) {
+      .main-grid {
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 1.875rem;
+      }
+    }
+
+    /* =====================================================================
+       PANEL IZQUIERDO: CONTROLES SIMPLES
+       ===================================================================== */
+    .controls-card {
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (min-width: 640px) {
+      .controls-card {
+        padding: 1.625rem;
+      }
+    }
+
+    /* Pestañas Grandes */
+    .tabs-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      background-color: var(--slate-100);
+      padding: 0.375rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 520px) {
+      .tabs-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .tab-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 10px;
+      padding: 0.85rem 0.9rem;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background-color: rgba(255, 255, 255, 0.75);
+    }
+
+    .tab-btn.active {
+      background-color: var(--navy-900);
+      color: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-btn-title {
+      display: block;
+      font-size: 0.9375rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      line-height: 1.25;
+    }
+
+    .tab-btn.active .tab-btn-title {
+      color: var(--white);
+    }
+
+    .tab-btn-desc {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--slate-600);
+      margin-top: 0.2rem;
+    }
+
+    .tab-btn.active .tab-btn-desc {
+      color: #cbd5e1;
+    }
+
+    /* Bloques de Formulario */
+    .control-block + .control-block {
+      margin-top: 1.375rem;
+      padding-top: 1.375rem;
+      border-top: 1px solid var(--slate-200);
+    }
+
+    .control-label {
+      display: block;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      margin-bottom: 0.55rem;
+    }
+
+    .control-helper {
+      font-size: 0.8125rem;
+      color: var(--slate-600);
+      margin-top: 0.45rem;
+    }
+
+    /* Input de Monto Grande */
+    .money-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .money-input {
+      width: 100%;
+      font-family: inherit;
+      font-size: 1.875rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      background-color: var(--slate-50);
+      border: 2px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 5.75rem 0.875rem 1rem;
+      outline: none;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .money-input:focus {
+      background-color: var(--white);
+      border-color: var(--navy-900);
+    }
+
+    .money-badge {
+      position: absolute;
+      right: 0.75rem;
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 0.8125rem;
+      font-weight: 800;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      pointer-events: none;
+    }
+
+    /* Botones Rápidos de Ejemplo */
+    .quick-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.65rem;
+    }
+
+    .quick-text {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--slate-500);
+      margin-right: 0.15rem;
+    }
+
+    .chip-btn {
+      appearance: none;
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      background-color: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 0.42rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip-btn:hover {
+      background-color: var(--slate-100);
+      border-color: var(--navy-900);
+    }
+
+    /* Selectores Estándar */
+    .select-box {
+      position: relative;
+    }
+
+    .clean-select {
+      width: 100%;
+      appearance: none;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      background-color: var(--slate-50);
+      border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 2.5rem 0.8rem 0.95rem;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .clean-select:focus {
+      background-color: var(--white);
+      border-color: var(--navy-900);
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--slate-600);
+      display: flex;
+    }
+
+    /* Caja de Tasa de Cambio Explicada */
+    .rate-box {
+      margin-top: 0.875rem;
+      background-color: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 1rem;
+    }
+
+    .rate-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rate-prefix {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--navy-900);
+    }
+
+    .rate-input {
+      width: 7.5rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      background-color: var(--white);
+      border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.65rem;
+      outline: none;
+    }
+
+    .rate-input:focus {
+      border-color: var(--navy-900);
+    }
+
+    .rate-suffix {
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: var(--emerald-700);
+    }
+
+    .rate-reset-btn {
+      margin-left: auto;
+      appearance: none;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 0.38rem 0.65rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--slate-600);
+      cursor: pointer;
+    }
+
+    .rate-reset-btn:hover {
+      color: var(--navy-900);
+      border-color: var(--slate-500);
+    }
+
+    /* =====================================================================
+       COLUMNA DERECHA: LOS 3 PASOS CLAROS PARA EL CLIENTE
+       ===================================================================== */
+    .steps-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Alerta cuando el monto es muy pequeño */
+    .min-warning {
+      background-color: var(--amber-50);
+      border: 1.5px solid var(--amber-200);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1.1rem;
+      color: var(--amber-800);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .step-card {
+      border-radius: var(--radius-xl);
+      padding: 1.25rem 1.375rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease;
+    }
+
+    @media (min-width: 640px) {
+      .step-card {
+        padding: 1.45rem 1.625rem;
+      }
+    }
+
+    .step-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+    }
+
+    /* PASO 1: Azul Marino */
+    .step-1 {
+      background-color: var(--navy-900);
+      color: var(--white);
+      border: 1px solid var(--navy-800);
+    }
+
+    .step-1 .step-pill {
+      background-color: rgba(59, 130, 246, 0.22);
+      color: #93c5fd;
+      border: 1px solid rgba(147, 197, 253, 0.35);
+    }
+
+    .step-1 .step-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .step-1 .step-amount {
+      font-size: 2.125rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-top: 0.25rem;
+      line-height: 1.15;
+    }
+
+    .step-1 .step-note {
+      font-size: 0.875rem;
+      color: #cbd5e1;
+      margin-top: 0.5rem;
+    }
+
+    .step-1 .step-note strong {
+      color: #93c5fd;
+    }
+
+    /* PASO 2: Ámbar / Verde Suave (Comisión en Euros con Descuento) */
+    .step-2 {
+      background-color: var(--white);
+      border: 2px solid #fde68a;
+      background-image: linear-gradient(to bottom right, #fffbeb 0%, #ffffff 55%, #ecfdf5 100%);
+    }
+
+    .step-2 .step-pill {
+      background-color: #fef3c7;
+      color: var(--amber-800);
+      border: 1px solid #fcd34d;
+    }
+
+    .discount-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background-color: var(--emerald-600);
+      color: var(--white);
+      font-size: 0.6875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+    }
+
+    .step-2 .step-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      margin-bottom: 0.75rem;
+    }
+
+    .fee-breakdown {
+      background-color: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .fee-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .fee-line-normal {
+      color: var(--slate-500);
+    }
+
+    .fee-line-normal del {
+      text-decoration: line-through;
+      font-weight: 600;
+    }
+
+    .fee-line-discount {
+      color: var(--emerald-700);
+      font-weight: 700;
+    }
+
+    .fee-line-final {
+      padding-top: 0.55rem;
+      border-top: 1px dashed var(--slate-200);
+      align-items: baseline;
+    }
+
+    .fee-line-final .lbl {
+      font-size: 0.9375rem;
+      font-weight: 800;
+      color: var(--navy-900);
+    }
+
+    .fee-line-final .val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--navy-900);
+    }
+
+    .fee-sub-split {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      margin-top: 0.5rem;
+    }
+
+    .fee-reassurance {
+      margin-top: 0.625rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* PASO 3: Verde Esmeralda Destacado */
+    .step-3 {
+      background: linear-gradient(135deg, var(--emerald-600) 0%, var(--emerald-700) 100%);
+      color: var(--white);
+      border: 1px solid var(--emerald-800);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step-3 .step-pill {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .step-3 .step-title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: #ecfdf5;
+    }
+
+    .step-3 .step-amount {
+      font-size: 2.375rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      margin-top: 0.25rem;
+      line-height: 1.15;
+      word-break: break-word;
+    }
+
+    @media (min-width: 640px) {
+      .step-3 .step-amount {
+        font-size: 2.625rem;
+      }
+    }
+
+    .step-3 .step-math {
+      font-size: 0.8125rem;
+      color: #d1fae5;
+      margin-top: 0.45rem;
+    }
+
+    .step-3 .step-guarantee {
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    /* =====================================================================
+       TARJETA COMPARATIVA: 1 ENVÍO VS 2 ENVÍOS
+       ===================================================================== */
+    .compare-section {
+      margin-top: 1.75rem;
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      padding: 1.375rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (min-width: 640px) {
+      .compare-section {
+        padding: 1.75rem;
+      }
+    }
+
+    .compare-header {
+      margin-bottom: 1.125rem;
+    }
+
+    .compare-title {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: var(--navy-900);
+    }
+
+    .compare-subtitle {
+      font-size: 0.875rem;
+      color: var(--slate-600);
+      margin-top: 0.25rem;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 720px) {
+      .compare-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .compare-box {
+      border-radius: var(--radius-lg);
+      padding: 1.125rem 1.25rem;
+      border: 1.5px solid var(--slate-200);
+      background-color: var(--slate-50);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .compare-box.recommended {
+      background-color: var(--emerald-50);
+      border-color: #6ee7b7;
+    }
+
+    .compare-box-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .compare-box-title {
+      font-size: 0.9375rem;
+      font-weight: 800;
+      color: var(--navy-900);
+    }
+
+    .save-pill {
+      background-color: var(--emerald-600);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    .compare-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+    }
+
+    .compare-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      color: var(--slate-700);
+    }
+
+    .compare-row strong {
+      color: var(--navy-900);
+    }
+
+    .compare-explain {
+      margin-top: 1rem;
+      background-color: var(--emerald-50);
+      border: 1.5px solid #6ee7b7;
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1.1rem;
+      font-size: 0.875rem;
+      color: var(--emerald-800);
+      line-height: 1.5;
+    }
+
+    .compare-action-btn {
+      margin-top: 0.25rem;
+      appearance: none;
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      background-color: var(--emerald-600);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.85rem;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    .compare-action-btn:hover {
+      background-color: var(--emerald-700);
+    }
+
+    /* =====================================================================
+       BARRA INFERIOR DE ACCIONES (WHATSAPP + IMPRIMIR PDF + RESTABLECER)
+       ===================================================================== */
+    .bottom-actions {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 720px) {
+      .bottom-actions {
+        grid-template-columns: 1.45fr 0.85fr 0.6fr;
+      }
+    }
+
+    .btn-whatsapp {
+      appearance: none;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 800;
+      background-color: var(--navy-900);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: var(--navy-800);
+    }
+
+    .btn-print {
+      appearance: none;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      background-color: var(--white);
+      color: var(--navy-900);
+      border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-print:hover {
+      background-color: var(--slate-100);
+      border-color: var(--slate-500);
+    }
+
+    .btn-reset {
+      appearance: none;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      background-color: var(--slate-100);
+      color: var(--slate-700);
+      border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 1rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-reset:hover {
+      background-color: var(--slate-200);
+      color: var(--navy-900);
+    }
+
+    /* Pie de Página */
+    .footer {
+      background-color: var(--white);
+      border-top: 1px solid var(--slate-200);
+      padding: 1.125rem 0;
+      font-size: 0.75rem;
+      color: var(--slate-500);
+      text-align: center;
+    }
+
+    /* Toast de Confirmación */
+    .toast-box {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      left: 1.25rem;
+      max-width: 24rem;
+      margin-left: auto;
+      z-index: 50;
+      background-color: var(--navy-900);
+      color: var(--white);
+      border-left: 4px solid var(--emerald-500);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .toast-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .hidden {
       display: none !important;
     }
 
     /* =====================================================================
-       REGLAS DE IMPRESIÓN / COMPROBANTE PDF EJECUTIVO DE UNA PÁGINA
+       ESTILOS DE IMPRESIÓN / GUARDAR PDF LIMPIO EN UNA SOLA PÁGINA
        ===================================================================== */
     @media print {
+      @page {
+        margin: 1cm;
+      }
+
       body {
         background-color: #ffffff !important;
-        color: #0f172a !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
+      .header {
+        padding: 0.9rem 0 1rem !important;
+      }
+
+      .main {
+        padding: 1rem 0 !important;
+      }
+
       .no-print,
       #controls-panel,
-      #actions-bar,
-      #toast-container {
+      #bottom-actions-bar,
+      #toast-notification {
         display: none !important;
       }
 
-      .site-header {
-        position: static !important;
-        box-shadow: none !important;
-        padding: 0.5rem 0 !important;
-      }
-
-      .main-content {
-        padding-top: 1rem !important;
-        padding-bottom: 0.5rem !important;
-      }
-
-      .stages-banner {
-        box-shadow: none !important;
-        margin-bottom: 1rem !important;
-        padding: 0.75rem !important;
-      }
-
-      .workspace-grid {
+      .main-grid {
         display: block !important;
       }
 
-      .quote-card {
+      .step-card,
+      .compare-section {
+        break-inside: avoid;
         box-shadow: none !important;
-        border: 1.5px solid #cbd5e1 !important;
-        width: 100% !important;
-        max-width: 100% !important;
       }
 
-      .site-footer {
+      .compare-section {
         margin-top: 1rem !important;
-        border-top: 1px solid #cbd5e1 !important;
+        padding: 1rem !important;
       }
     }
   </style>
@@ -1100,914 +1014,872 @@
 <body>
 
   <!-- ===================================================================== -->
-  <!-- ENCABEZADO INSTITUCIONAL                                              -->
+  <!-- ENCABEZADO SIMPLE Y CLARO                                             -->
   <!-- ===================================================================== -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="brand-group">
-        <div class="brand-mark" aria-hidden="true">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9"></circle>
-            <path d="M3.6 9h16.8"></path>
-            <path d="M3.6 15h16.8"></path>
-            <path d="M11.5 3a17 17 0 0 0 0 18"></path>
-            <path d="M12.5 3a17 17 0 0 1 0 18"></path>
-          </svg>
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div class="brand-pill">
+          <span class="brand-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </span>
+          <span>Envíos Europa → Suramérica</span>
         </div>
-        <div>
-          <div class="brand-title">
-            <span>EuroLatam <span class="accent">Pay</span></span>
-            <span class="brand-badge">Corporate Treasury</span>
-          </div>
-          <p class="brand-subtitle">Cotizador Ejecutivo para Clientes • Europa → Suramérica</p>
+
+        <div class="offer-badge-top">
+          <span class="offer-dot"></span>
+          <span>Promoción activa: 15% de descuento ya aplicado en la comisión del servicio</span>
         </div>
       </div>
 
-      <div class="header-meta">
-        <span class="header-meta-label">Fecha de Emisión</span>
-        <span id="header-date" class="header-meta-value tabular-nums">--/--/----</span>
-      </div>
+      <h1 class="header-title">Cotizador Simple — Envíos Europa a Suramérica</h1>
+      <p class="header-subtitle">
+        Calcula en 3 pasos cuántos euros envías, cuánto es la comisión con tu 15% de descuento y cuánto dinero limpio llega a Suramérica
+      </p>
     </div>
   </header>
 
   <!-- ===================================================================== -->
   <!-- CONTENIDO PRINCIPAL                                                   -->
   <!-- ===================================================================== -->
-  <main class="container main-content">
+  <main class="container main">
 
-    <!-- Título y Estado Operativo -->
-    <section class="hero-bar">
-      <div>
-        <h1 class="hero-title">Cotizador de Transferencias y Nómina Internacional</h1>
-        <p class="hero-desc">
-          Calcule con total transparencia el costo integral del servicio y el importe neto garantizado en destino.
-        </p>
-      </div>
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span>Corredor Europa – Suramérica Operativo</span>
-      </div>
-    </section>
-
-    <!-- Banner de 3 Etapas Institucionales -->
-    <section class="stages-banner" aria-label="Etapas del proceso de liquidación">
-      <div class="stage-card">
-        <div class="stage-num">1</div>
-        <div>
-          <h2 class="stage-title">Etapa 1: Recepción en Europa (EUR)</h2>
-          <p class="stage-text">Transferencia bancaria SEPA / Fondos en origen.</p>
-        </div>
-      </div>
-
-      <div class="stage-card">
-        <div class="stage-num">2</div>
-        <div>
-          <h2 class="stage-title">Etapa 2: Compensación y Conversión</h2>
-          <p class="stage-text">Liquidación internacional y cobertura cambiaria.</p>
-        </div>
-      </div>
-
-      <div class="stage-card stage-final">
-        <div class="stage-num">3</div>
-        <div>
-          <h2 class="stage-title">Etapa 3: Dispersión en Suramérica</h2>
-          <p class="stage-text">Entrega neta garantizada al personal en destino.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Área de Trabajo de 2 Columnas -->
-    <div class="workspace-grid">
+    <div class="main-grid">
 
       <!-- ================================================================= -->
-      <!-- COLUMNA IZQUIERDA: PARÁMETROS DE COTIZACIÓN DEL CLIENTE           -->
+      <!-- COLUMNA IZQUIERDA: CONTROLES SIMPLES                              -->
       <!-- ================================================================= -->
-      <section id="controls-panel" class="card no-print" aria-label="Parámetros de cálculo">
-        <div class="card-body">
+      <section id="controls-panel" class="controls-card no-print" aria-label="Configurar envío">
 
-          <!-- 1. Modalidad de Cálculo Bidireccional -->
-          <div class="form-section">
-            <div class="section-label">
-              <span>1. Modalidad de Cálculo</span>
-            </div>
-            <div class="mode-tabs" role="tablist">
-              <button
-                id="tab-mode-1"
-                type="button"
-                role="tab"
-                aria-selected="true"
-                class="mode-tab active"
-                onclick="setCalculationMode('send')"
-              >
-                <span class="mode-tab-title">Calcular por Monto a Enviar desde Europa</span>
-                <span class="mode-tab-sub">Ingresar capital bruto en EUR</span>
-              </button>
+        <!-- Dos Pestañas Grandes -->
+        <div class="tabs-grid" role="tablist">
+          <button
+            id="tab-send"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            class="tab-btn active"
+            onclick="switchTab('send')"
+          >
+            <span class="tab-btn-title">Quiero enviar una cantidad en Euros (€)</span>
+            <span class="tab-btn-desc">Tengo los euros y veo cuánto llega</span>
+          </button>
 
-              <button
-                id="tab-mode-2"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                class="mode-tab"
-                onclick="setCalculationMode('receive')"
-              >
-                <span class="mode-tab-title">Calcular por Monto Neto a Recibir en Destino</span>
-                <span class="mode-tab-sub">Ingresar pago exacto en destino</span>
-              </button>
-            </div>
+          <button
+            id="tab-receive"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            class="tab-btn"
+            onclick="switchTab('receive')"
+          >
+            <span class="tab-btn-title">Quiero que lleguen exactos a destino ($)</span>
+            <span class="tab-btn-desc">Calcula cuántos euros debes enviar</span>
+          </button>
+        </div>
+
+        <!-- 1. Campo Grande para el Monto -->
+        <div class="control-block">
+          <label for="amount-input" id="amount-label" class="control-label">
+            Quiero enviar una cantidad en Euros (€)
+          </label>
+
+          <div class="money-box">
+            <input
+              id="amount-input"
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="any"
+              value="1000"
+              placeholder="0"
+              oninput="handleAmountInput(this.value)"
+              class="money-input tabular-nums"
+            />
+            <span id="amount-currency-badge" class="money-badge">€ EUR</span>
           </div>
 
-          <!-- 2. Importe Principal -->
-          <div class="form-section">
-            <div class="section-label">
-              <label for="amount-input" id="amount-label">2. Monto a Enviar desde Europa (EUR)</label>
-              <span id="amount-hint" class="label-hint">Capital bruto en origen</span>
-            </div>
+          <div class="quick-row">
+            <span class="quick-text">Ejemplos rápidos:</span>
+            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(500)" id="chip-500">500 €</button>
+            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(1000)" id="chip-1000">1.000 €</button>
+            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(1500)" id="chip-1500">1.500 €</button>
+            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(2000)" id="chip-2000">2.000 €</button>
+          </div>
+        </div>
 
-            <div class="amount-input-wrap">
+        <!-- 2. Selector de Cantidad de Envíos -->
+        <div class="control-block">
+          <label for="shipments-select" class="control-label">
+            ¿En cuántos envíos lo vas a mandar?
+          </label>
+          <div class="select-box">
+            <select id="shipments-select" class="clean-select" onchange="handleShipmentsChange(this.value)">
+              <option value="1" selected>1 envío de una vez (Más económico)</option>
+              <option value="2">2 envíos divididos</option>
+              <option value="3">3 envíos divididos</option>
+              <option value="4">4 envíos divididos</option>
+            </select>
+            <span class="select-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+          <p class="control-helper">
+            Si divides el monto en varios envíos, cada transferencia lleva su pequeño costo operativo fijo.
+          </p>
+        </div>
+
+        <!-- 3. Selector de Moneda en Destino + Tasa Editable -->
+        <div class="control-block">
+          <label for="dest-currency-select" class="control-label">
+            ¿En qué moneda lo reciben en Suramérica?
+          </label>
+          <div class="select-box">
+            <select id="dest-currency-select" class="clean-select" onchange="handleDestCurrencyChange(this.value)">
+              <option value="USD" selected>Dólares Americanos (USD $)</option>
+              <option value="VES">Bolívares — Venezuela (VES Bs.)</option>
+              <option value="COP">Pesos Colombianos — Colombia (COP $)</option>
+              <option value="ARS">Pesos Argentinos — Argentina (ARS $)</option>
+              <option value="PEN">Soles Peruanos — Perú (PEN S/)</option>
+              <option value="CLP">Pesos Chilenos — Chile (CLP $)</option>
+            </select>
+            <span class="select-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <div class="rate-box">
+            <div class="rate-row">
+              <label for="rate-input" class="rate-prefix">Tasa de cambio: 1 € =</label>
               <input
-                id="amount-input"
+                id="rate-input"
                 type="number"
                 inputmode="decimal"
-                min="0"
+                min="0.0001"
                 step="any"
-                value="5000.00"
-                placeholder="0.00"
-                oninput="onAmountChange(this.value)"
-                class="amount-input tabular-nums"
+                value="1.08"
+                oninput="handleRateInput(this.value)"
+                class="rate-input tabular-nums"
               />
-              <span id="input-currency-badge" class="currency-tag">EUR</span>
+              <span id="rate-unit-label" class="rate-suffix">$ USD</span>
+              <button type="button" class="rate-reset-btn" onclick="resetCurrentCurrencyRate()">Restaurar</button>
             </div>
-
-            <div class="quick-amounts">
-              <span class="quick-label">Importes frecuentes:</span>
-              <button type="button" class="quick-btn tabular-nums" onclick="setQuickAmount(1000)">1,000</button>
-              <button type="button" class="quick-btn tabular-nums" onclick="setQuickAmount(2500)">2,500</button>
-              <button type="button" class="quick-btn tabular-nums" onclick="setQuickAmount(5000)">5,000</button>
-              <button type="button" class="quick-btn tabular-nums" onclick="setQuickAmount(10000)">10,000</button>
-              <button type="button" class="quick-btn tabular-nums" onclick="setQuickAmount(25000)">25,000</button>
-            </div>
+            <p class="control-helper" style="margin-top: 0.45rem;">
+              Por cada 1 euro limpio que se envía después de la comisión, el destinatario recibe esta cantidad.
+            </p>
           </div>
-
-          <!-- 3. Moneda de Destino y Tasa Cambiaria -->
-          <div class="form-section">
-            <div class="section-label">
-              <label for="currency-select">3. Moneda de Pago en Suramérica</label>
-            </div>
-
-            <div class="select-wrap">
-              <select id="currency-select" class="form-select" onchange="onCurrencyChange(this.value)">
-                <option value="USD">USD — Dólar Estadounidense (USD)</option>
-                <option value="VES">VES — Bolívar Venezolano (VES)</option>
-                <option value="COP">COP — Peso Colombiano (COP)</option>
-                <option value="ARS">ARS — Peso Argentino (ARS)</option>
-                <option value="PEN">PEN — Sol Peruano (PEN)</option>
-                <option value="CLP">CLP — Peso Chileno (CLP)</option>
-              </select>
-              <span class="select-chevron" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </span>
-            </div>
-
-            <!-- Panel de Tasa Cambiaria Local (Visible cuando se selecciona moneda distinta de USD) -->
-            <div id="local-fx-box" class="fx-box hidden">
-              <div class="fx-box-header">
-                <span id="fx-rate-display" class="fx-current-pill tabular-nums">1 USD = 45.50 VES</span>
-                <button type="button" id="toggle-custom-fx-btn" class="link-btn" onclick="toggleCustomRateEditor()">
-                  Probar tasa referencial local
-                </button>
-              </div>
-
-              <div id="custom-fx-editor" class="fx-custom-controls hidden">
-                <label for="custom-fx-input" class="field-label" style="margin-bottom: 0;">Tasa (1 USD =):</label>
-                <input
-                  id="custom-fx-input"
-                  type="number"
-                  inputmode="decimal"
-                  min="0.0001"
-                  step="any"
-                  oninput="onCustomRateInput(this.value)"
-                  class="fx-custom-input tabular-nums"
-                />
-                <button type="button" class="btn-mini" onclick="resetDefaultDestinationRate()">
-                  Restablecer tasa oficial
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 4. Datos Opcionales del Comprobante -->
-          <div class="form-section">
-            <div class="section-label">
-              <span>4. Personalización del Comprobante <span class="label-hint">(Opcional)</span></span>
-            </div>
-
-            <div class="two-col-inputs">
-              <div>
-                <label for="client-name-input" class="field-label">Nombre del Cliente o Empresa</label>
-                <input
-                  id="client-name-input"
-                  type="text"
-                  maxlength="70"
-                  placeholder="Ej. Corporación Atlántica S.L."
-                  oninput="updateQuoteMetadata()"
-                  class="form-input"
-                />
-              </div>
-              <div>
-                <label for="concept-input" class="field-label">Concepto de la Operación</label>
-                <input
-                  id="concept-input"
-                  type="text"
-                  maxlength="80"
-                  placeholder="Pago de nómina y honorarios — Suramérica"
-                  oninput="updateQuoteMetadata()"
-                  class="form-input"
-                />
-              </div>
-            </div>
-          </div>
-
         </div>
+
       </section>
 
       <!-- ================================================================= -->
-      <!-- COLUMNA DERECHA: TARJETA EJECUTIVA DE RESULTADOS                  -->
+      <!-- COLUMNA DERECHA: LOS 3 PASOS EN LENGUAJE COTIDIANO                -->
       <!-- ================================================================= -->
-      <section id="quote-card" class="quote-card" aria-label="Resumen de cotización">
-        
-        <!-- Cabecera Oscura Institucional -->
-        <div class="quote-header">
+      <section class="steps-column" aria-label="Resultado paso a paso">
+
+        <!-- Aviso si el monto es muy pequeño -->
+        <div id="min-warning-box" class="min-warning hidden" role="alert">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
           <div>
-            <div class="quote-tag-row">
-              <span class="quote-tag">Cotización Ejecutiva</span>
-              <span id="quote-ref-id" class="quote-ref tabular-nums">COT-20260101-0000</span>
+            <strong>Monto demasiado bajo para cubrir el costo fijo</strong>
+            <p id="min-warning-text" style="margin-top: 0.15rem;">
+              Ingresa un monto mayor a 3,50 € para que quede saldo neto para enviar a Suramérica.
+            </p>
+          </div>
+        </div>
+
+        <!-- PASO 1: Azul Marino -->
+        <article class="step-card step-1">
+          <div class="step-header">
+            <span class="step-pill">Paso 1</span>
+            <span style="font-size: 0.75rem; color: #94a3b8; font-weight: 600;">Siempre en Euros (€)</span>
+          </div>
+          <h2 class="step-title">Tú envías desde Europa</h2>
+          <div id="step1-amount" class="step-amount tabular-nums">1.000,00 €</div>
+          <p id="step1-note" class="step-note">En <strong>1 sola transferencia</strong> desde Europa.</p>
+        </article>
+
+        <!-- PASO 2: Ámbar / Verde Suave (Comisión ÚNICAMENTE en Euros con 15% de descuento) -->
+        <article class="step-card step-2">
+          <div class="step-header">
+            <span class="step-pill">Paso 2</span>
+            <span class="discount-chip">DESCUENTO PROMOCIONAL: 15% APLICADO</span>
+          </div>
+          <h2 class="step-title">Comisión total del servicio (con 15% de descuento)</h2>
+
+          <div class="fee-breakdown">
+            <div class="fee-line fee-line-normal">
+              <span>Tarifa normal (4,10% + 5,90 € por envío):</span>
+              <del id="step2-normal-fee" class="tabular-nums">46,90 €</del>
             </div>
-            <h2 class="quote-title">Resumen de Liquidación Internacional</h2>
+
+            <div class="fee-line fee-line-discount">
+              <span>Tu descuento (15%):</span>
+              <span id="step2-discount-saved" class="tabular-nums">-7,04 €</span>
+            </div>
+
+            <div class="fee-line fee-line-final">
+              <span class="lbl">Comisión final a pagar:</span>
+              <span id="step2-final-fee" class="val tabular-nums">39,86 €</span>
+            </div>
           </div>
 
-          <div class="quote-date-box">
-            <span class="quote-date-lbl">Fecha y Hora</span>
-            <span id="quote-datetime" class="quote-date-val tabular-nums">--/--/---- --:--</span>
-          </div>
-        </div>
+          <p id="step2-per-shipment-note" class="fee-sub-split hidden tabular-nums">
+            (Equivale a 22,44 € de comisión por cada envío de 500,00 €)
+          </p>
 
-        <!-- Barra de Cliente y Concepto -->
-        <div id="quote-meta-bar" class="quote-client-bar">
-          <div id="meta-client-item" class="meta-item hidden">
-            <span class="k">Cliente:</span>
-            <span id="meta-client-val" class="v"></span>
-          </div>
-          <div class="meta-item">
-            <span class="k">Concepto:</span>
-            <span id="meta-concept-val" class="v">Pago de nómina y honorarios — Suramérica</span>
-          </div>
-        </div>
-
-        <!-- Cuerpo de Cifras -->
-        <div class="quote-body">
-
-          <!-- Advertencia de Monto Mínimo (Oculta salvo importes inferiores a tarifa fija) -->
-          <div id="min-amount-alert" class="warning-banner hidden" role="alert">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;">
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-              <line x1="12" y1="9" x2="12" y2="13"></line>
-              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          <p class="fee-reassurance">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+              <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
-            <div>
-              <strong>Importe inferior al mínimo operativo</strong>
-              <span id="min-amount-detail">Ingrese un monto superior a €12.44 EUR para cubrir la tarifa fija de liquidación.</span>
-            </div>
+            <span>Toda la comisión se expresa en Euros (€) y nunca se suma ni confunde con los Dólares ($) de destino.</span>
+          </p>
+        </article>
+
+        <!-- PASO 3: Verde Esmeralda Destacado -->
+        <article class="step-card step-3">
+          <div class="step-header">
+            <span class="step-pill">Paso 3</span>
+            <span id="step3-currency-tag" style="font-size: 0.75rem; color: #d1fae5; font-weight: 700;">Moneda en destino: Dólares Americanos (USD $)</span>
           </div>
+          <h2 class="step-title">Tu destinatario recibe neto en Suramérica</h2>
+          <div id="step3-amount" class="step-amount tabular-nums">1.036,95 $</div>
+          <p id="step3-math-detail" class="step-math tabular-nums">
+            960,14 € limpios × tasa 1,08 = 1.036,95 $
+          </p>
+          <p class="step-guarantee">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Dinero limpio a recibir, libre de descuentos adicionales.</span>
+          </p>
+        </article>
 
-          <!-- Desglose Ejecutivo de 4 Líneas -->
-          <div class="metrics-list">
-            
-            <!-- 1. Monto Total a Transferir desde Europa (EUR) -->
-            <div class="metric-row">
-              <div>
-                <div class="metric-name">Monto Total a Transferir desde Europa</div>
-                <div class="metric-sub">Importe bruto a remitir en euros (EUR)</div>
-              </div>
-              <div class="metric-val-group">
-                <div id="out-gross-eur" class="metric-val-lg tabular-nums">€5,000.00 EUR</div>
-              </div>
-            </div>
-
-            <!-- 2. Comisión Integral del Servicio -->
-            <div class="metric-row">
-              <div>
-                <div class="metric-name">
-                  <span>Comisión Integral del Servicio</span>
-                  <span class="badge-all-in">Todo Incluido</span>
-                </div>
-                <div class="metric-sub">Gestión operativa, compensación y liquidación</div>
-              </div>
-              <div class="metric-val-group">
-                <div id="out-fee-eur" class="metric-val-md tabular-nums">€187.00 EUR</div>
-                <div id="out-fee-pct" class="metric-val-sub tabular-nums">(3.74% efectivo)</div>
-              </div>
-            </div>
-
-            <!-- 3. Equivalente Neto Liquidado (USD) -->
-            <div class="metric-row">
-              <div>
-                <div class="metric-name">Equivalente Neto Liquidado (USD)</div>
-                <div class="metric-sub">Base de conversión internacional tras comisión</div>
-              </div>
-              <div class="metric-val-group">
-                <div id="out-net-usd" class="metric-val-md tabular-nums">$5,222.11 USD</div>
-              </div>
-            </div>
-
-            <!-- 4. Tasa de Cambio Aplicada -->
-            <div class="metric-row">
-              <div>
-                <div class="metric-name">Tasa de Cambio Aplicada</div>
-                <div id="out-rate-sub" class="metric-sub">Paridad base EUR/USD de liquidación</div>
-              </div>
-              <div class="metric-val-group">
-                <span id="out-rate-badge" class="rate-pill tabular-nums">1 EUR = 1.0850 USD</span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Bloque Principal Destacado: MONTO NETO GARANTIZADO A RECIBIR EN DESTINO -->
-          <div class="net-payout-box">
-            <div class="net-payout-header">
-              <span>Monto Neto Garantizado a Recibir en Destino</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            </div>
-
-            <div class="net-payout-main">
-              <div id="out-net-dest" class="net-payout-amount tabular-nums">$5,222.11 USD</div>
-              <span id="out-dest-currency-label" class="net-payout-currency">Dólar Estadounidense (USD)</span>
-            </div>
-
-            <div class="net-payout-note">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <span>Importe neto final acreditado en destino, libre de cargos adicionales para el beneficiario.</span>
-            </div>
-          </div>
-
-          <!-- Botones de Acción -->
-          <div id="actions-bar" class="actions-grid no-print">
-            <button type="button" class="btn btn-primary" onclick="copyExecutiveSummary()">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-              <span>Copiar Resumen de Cotización</span>
-            </button>
-
-            <button type="button" class="btn btn-secondary" onclick="window.print()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                <rect x="6" y="14" width="12" height="8"></rect>
-              </svg>
-              <span>Imprimir / Guardar PDF</span>
-            </button>
-
-            <button type="button" class="btn btn-ghost" onclick="resetCalculator()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg>
-              <span>Restablecer</span>
-            </button>
-          </div>
-
-        </div>
       </section>
 
     </div>
+
+    <!-- =================================================================== -->
+    <!-- TARJETA COMPARATIVA: ¿ENVIAR TODO JUNTO O DIVIDIDO EN 2 ENVÍOS?     -->
+    <!-- =================================================================== -->
+    <section class="compare-section" aria-label="Comparador de 1 envío frente a 2 envíos">
+      <div class="compare-header">
+        <h2 class="compare-title">¿Enviar todo junto o dividido en 2 envíos?</h2>
+        <p id="compare-subtitle" class="compare-subtitle tabular-nums">
+          Comparación automática para tus 1.000,00 € (con tu 15% de descuento ya aplicado en ambas opciones):
+        </p>
+      </div>
+
+      <div class="compare-grid">
+        <!-- Opción A: 1 solo envío -->
+        <div class="compare-box recommended">
+          <div>
+            <div class="compare-box-top">
+              <span id="cmp-1-title" class="compare-box-title tabular-nums">1 solo envío de 1.000,00 €</span>
+              <span id="cmp-save-badge" class="save-pill tabular-nums">Ahorras 5,02 € extra</span>
+            </div>
+            <div class="compare-metrics" style="margin-top: 0.75rem;">
+              <div class="compare-row">
+                <span>Tarifa normal sin descuento:</span>
+                <del id="cmp-1-normal-fee" class="tabular-nums" style="color: #64748b;">46,90 €</del>
+              </div>
+              <div class="compare-row">
+                <span>Comisión con 15% dto.:</span>
+                <strong id="cmp-1-fee" class="tabular-nums">39,86 € (ahorras 7,04 €)</strong>
+              </div>
+              <div class="compare-row">
+                <span>Dinero limpio que llega:</span>
+                <strong id="cmp-1-net" class="tabular-nums" style="color: #047857;">1.036,95 $</strong>
+              </div>
+            </div>
+          </div>
+
+          <button
+            id="switch-to-1-btn"
+            type="button"
+            class="compare-action-btn no-print hidden"
+            onclick="selectOneShipment()"
+          >
+            Elegir 1 solo envío y ahorrar 5,02 € adicionales
+          </button>
+        </div>
+
+        <!-- Opción B: 2 envíos divididos -->
+        <div class="compare-box">
+          <div>
+            <div class="compare-box-top">
+              <span id="cmp-2-title" class="compare-box-title tabular-nums">2 envíos de 500,00 € cada uno</span>
+              <span style="font-size: 0.75rem; font-weight: 700; color: #64748b;">2 transferencias</span>
+            </div>
+            <div class="compare-metrics" style="margin-top: 0.75rem;">
+              <div class="compare-row">
+                <span>Comisión por cada envío (15% dto.):</span>
+                <strong id="cmp-2-fee-each" class="tabular-nums">22,44 € (normal 26,40 €)</strong>
+              </div>
+              <div class="compare-row">
+                <span>Total comisión por 2 envíos:</span>
+                <strong id="cmp-2-fee-total" class="tabular-nums">44,88 € en total</strong>
+              </div>
+              <div class="compare-row">
+                <span>Dinero limpio que llega en total:</span>
+                <strong id="cmp-2-net" class="tabular-nums">1.031,53 $</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="compare-explanation" class="compare-explain tabular-nums">
+        <strong>Conclusión:</strong> Al enviar todo en <strong>1 sola transferencia</strong> ahorras <strong>5,02 € adicionales</strong> respecto a dividirlo en dos envíos (porque cada transferencia individual lleva un costo fijo operativo de 5,02 € con tu 15% de descuento).
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- BARRA INFERIOR DE ACCIONES                                          -->
+    <!-- =================================================================== -->
+    <div id="bottom-actions-bar" class="bottom-actions no-print">
+      <button type="button" class="btn-whatsapp" onclick="copyWhatsAppSummary()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>Copiar resumen para WhatsApp</span>
+      </button>
+
+      <button type="button" class="btn-print" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span>Imprimir / Guardar PDF</span>
+      </button>
+
+      <button type="button" class="btn-reset" onclick="resetCalculator()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        <span>Restablecer</span>
+      </button>
+    </div>
+
   </main>
 
   <!-- ===================================================================== -->
-  <!-- PIE DE PÁGINA CORPORATIVO                                             -->
+  <!-- PIE DE PÁGINA                                                         -->
   <!-- ===================================================================== -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>
-        <span class="footer-brand">EuroLatam Pay</span> • Servicios Corporativos de Liquidación y Pagos Transfronterizos
-      </div>
-      <div>
-        Cotización informativa válida para la fecha de emisión sujeta a confirmación operativa.
-      </div>
+  <footer class="footer">
+    <div class="container">
+      Cotizador Simple — Envíos Europa a Suramérica • Cifras claras sin cargos ocultos • Promoción vigente: 15% de descuento en la comisión del servicio.
     </div>
   </footer>
 
-  <!-- Contenedor de Notificaciones Toast -->
-  <div id="toast-container" class="toast-container no-print" aria-live="polite"></div>
+  <!-- Notificación Flotante -->
+  <div id="toast-notification" class="toast-box no-print" role="status" aria-live="polite">
+    <span class="offer-dot"></span>
+    <span id="toast-text">Resumen copiado listo para pegar en WhatsApp</span>
+  </div>
 
   <!-- ===================================================================== -->
-  <!-- MOTOR DE CÁLCULO COMERCIAL Y EXPORTACIÓN                              -->
+  <!-- LÓGICA DE CÁLCULO EXACTA Y FORMATO PARA PRINCIPIANTES                 -->
   <!-- ===================================================================== -->
   <script>
     /**
-     * TARIFARIO COMERCIAL CORPORATIVO
-     * Parámetros base de liquidación entre Europa (EUR) y Suramérica.
+     * PARÁMETROS DE COMISIÓN Y DESCUENTO PROMOCIONAL (-15%)
+     * Tarifa estándar habitual: 4,10% + 5,90 € fijos por cada envío (46,90 € por cada 1.000 €).
+     * Con 15% de descuento directo sobre la comisión total: 3,485% + 5,015 € fijos por cada envío.
      */
-    const TARIFARIO_COMERCIAL = {
-      tasaEurUsd: 1.0850,
-      comisionPorcentual: 0.035,
-      tarifaFijaEur: 12.00,
-      tasasDestino: {
-        USD: { nombre: 'Dólar Estadounidense (USD)', simbolo: '$', tasa: 1.00 },
-        VES: { nombre: 'Bolívar Venezolano (VES)', simbolo: 'Bs.', tasa: 45.50 },
-        COP: { nombre: 'Peso Colombiano (COP)', simbolo: '$', tasa: 4380.00 },
-        ARS: { nombre: 'Peso Argentino (ARS)', simbolo: '$', tasa: 1025.00 },
-        PEN: { nombre: 'Sol Peruano (PEN)', simbolo: 'S/', tasa: 3.78 },
-        CLP: { nombre: 'Peso Chileno (CLP)', simbolo: '$', tasa: 975.00 }
+    const TASA_COMISION_NORMAL = 0.041;
+    const FIJO_NORMAL_POR_ENVIO = 5.90;
+    const FACTOR_DESCUENTO = 0.15; // 15% de descuento directo sobre la comisión total
+
+    const TASA_COMISION_FINAL = TASA_COMISION_NORMAL * (1 - FACTOR_DESCUENTO); // 0.03485
+    const FIJO_FINAL_POR_ENVIO = FIJO_NORMAL_POR_ENVIO * (1 - FACTOR_DESCUENTO);  // 5.015 €
+
+    const MONEDAS_DESTINO = {
+      USD: {
+        nombre: 'Dólares Americanos (USD $)',
+        simbolo: '$',
+        tasaPorDefecto: 1.08,
+        decimalesTasa: 2
+      },
+      VES: {
+        nombre: 'Bolívares — Venezuela (VES Bs.)',
+        simbolo: 'Bs.',
+        tasaPorDefecto: 52.50,
+        decimalesTasa: 2
+      },
+      COP: {
+        nombre: 'Pesos Colombianos — Colombia (COP $)',
+        simbolo: '$',
+        tasaPorDefecto: 4720.00,
+        decimalesTasa: 2
+      },
+      ARS: {
+        nombre: 'Pesos Argentinos — Argentina (ARS $)',
+        simbolo: '$',
+        tasaPorDefecto: 1280.00,
+        decimalesTasa: 2
+      },
+      PEN: {
+        nombre: 'Soles Peruanos — Perú (PEN S/)',
+        simbolo: 'S/',
+        tasaPorDefecto: 4.08,
+        decimalesTasa: 2
+      },
+      CLP: {
+        nombre: 'Pesos Chilenos — Chile (CLP $)',
+        simbolo: '$',
+        tasaPorDefecto: 1045.00,
+        decimalesTasa: 2
       }
     };
 
-    const DEFAULT_CONCEPT = 'Pago de nómina y honorarios — Suramérica';
-
-    // Estado interno de la sesión del cliente
     const state = {
-      mode: 'send', // 'send' (EUR -> Destino) | 'receive' (Destino -> EUR)
-      inputAmount: 5000.00,
-      currency: 'USD',
-      customRateActive: false,
-      customRateValue: null,
-      clientName: '',
-      concept: '',
-      quoteId: buildQuoteReference(),
-      lastResult: null
+      tab: 'send',      // 'send' (Euros que envío) | 'receive' (Monto exacto en destino)
+      amount: 1000,     // Valor ingresado en el campo principal
+      shipments: 1,     // Número de envíos en que se divide la operación
+      currency: 'USD',  // Moneda de destino seleccionada
+      rate: 1.08,       // Tasa aplicada por cada 1 € limpio enviado
+      lastCalc: null    // Snapshot de los resultados actuales
     };
 
-    /**
-     * Genera identificador único de cotización con formato COT-YYYYMMDD-XXXX.
-     */
-    function buildQuoteReference() {
-      const now = new Date();
-      const yyyy = now.getFullYear();
-      const mm = String(now.getMonth() + 1).padStart(2, '0');
-      const dd = String(now.getDate()).padStart(2, '0');
-      const rand = String(Math.floor(1000 + Math.random() * 9000));
-      return `COT-${yyyy}${mm}${dd}-${rand}`;
-    }
+    let toastTimer = null;
 
     /**
-     * Formatea números con separadores de miles y decimales fijos.
+     * Formatea números con separador de miles y coma decimal estilo español (ej. 1.048,79).
      */
-    function formatNumber(value, decimals = 2) {
-      if (!Number.isFinite(value)) return (0).toFixed(decimals);
-      return new Intl.NumberFormat('en-US', {
+    function fmt(num, decimals = 2) {
+      if (!Number.isFinite(num)) {
+        return (0).toLocaleString('es-ES', {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals
+        });
+      }
+      return num.toLocaleString('es-ES', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals
-      }).format(value);
-    }
-
-    /**
-     * Inicializa fecha, hora e identificador en la interfaz.
-     */
-    function renderDateAndId() {
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('es-ES', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
       });
-      const timeStr = now.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit'
+    }
+
+    /**
+     * Formatea importes expresados exclusivamente en Euros (€).
+     */
+    function fmtEur(num) {
+      return `${fmt(num, 2)} €`;
+    }
+
+    /**
+     * Formatea importes expresados en la moneda de destino seleccionada.
+     */
+    function fmtDest(num, currencyCode) {
+      const info = MONEDAS_DESTINO[currencyCode] || MONEDAS_DESTINO.USD;
+      return `${fmt(num, 2)} ${info.simbolo}`;
+    }
+
+    /**
+     * Actualiza los botones de ejemplos rápidos según la moneda activa del input.
+     */
+    function updateQuickChips(simbolo) {
+      [500, 1000, 1500, 2000].forEach(val => {
+        const el = document.getElementById(`chip-${val}`);
+        if (el) {
+          el.textContent = `${fmt(val, 0)} ${simbolo}`;
+        }
       });
-
-      document.getElementById('header-date').textContent = dateStr;
-      document.getElementById('quote-datetime').textContent = `${dateStr} • ${timeStr}`;
-      document.getElementById('quote-ref-id').textContent = state.quoteId;
     }
 
     /**
-     * Devuelve la tasa destino vigente (oficial o personalizada de referencia).
+     * Muestra una notificación temporal limpia en pantalla sin usar alert().
      */
-    function getActiveDestinationRate() {
-      if (state.currency === 'USD') {
-        return 1.00;
+    function showToast(message) {
+      const box = document.getElementById('toast-notification');
+      const textEl = document.getElementById('toast-text');
+      if (!box || !textEl) return;
+
+      textEl.textContent = message;
+      box.classList.add('visible');
+
+      if (toastTimer) {
+        clearTimeout(toastTimer);
       }
-      if (state.customRateActive && Number.isFinite(state.customRateValue) && state.customRateValue > 0) {
-        return state.customRateValue;
-      }
-      return TARIFARIO_COMERCIAL.tasasDestino[state.currency].tasa;
+      toastTimer = setTimeout(() => {
+        box.classList.remove('visible');
+      }, 3200);
     }
 
     /**
-     * Cambia entre Modo 1 (Enviar EUR) y Modo 2 (Recibir Neto en Destino).
+     * Cambia entre la pestaña de envío en Euros (€) y la de monto exacto en destino.
      */
-    function setCalculationMode(newMode) {
-      if (state.mode === newMode) return;
-      state.mode = newMode;
-
-      const tab1 = document.getElementById('tab-mode-1');
-      const tab2 = document.getElementById('tab-mode-2');
+    function switchTab(newTab) {
+      state.tab = newTab;
+      const tabSend = document.getElementById('tab-send');
+      const tabReceive = document.getElementById('tab-receive');
       const label = document.getElementById('amount-label');
-      const hint = document.getElementById('amount-hint');
-      const badge = document.getElementById('input-currency-badge');
+      const badge = document.getElementById('amount-currency-badge');
       const input = document.getElementById('amount-input');
+      const info = MONEDAS_DESTINO[state.currency] || MONEDAS_DESTINO.USD;
 
-      if (newMode === 'send') {
-        tab1.classList.add('active');
-        tab1.setAttribute('aria-selected', 'true');
-        tab2.classList.remove('active');
-        tab2.setAttribute('aria-selected', 'false');
+      if (newTab === 'send') {
+        tabSend.classList.add('active');
+        tabSend.setAttribute('aria-selected', 'true');
+        tabReceive.classList.remove('active');
+        tabReceive.setAttribute('aria-selected', 'false');
 
-        label.textContent = '2. Monto a Enviar desde Europa (EUR)';
-        hint.textContent = 'Capital bruto en origen';
-        badge.textContent = 'EUR';
+        label.textContent = 'Quiero enviar una cantidad en Euros (€)';
+        badge.textContent = '€ EUR';
+        updateQuickChips('€');
 
-        if (state.lastResult && state.lastResult.montoEur > 0) {
-          const val = Number(state.lastResult.montoEur.toFixed(2));
-          state.inputAmount = val;
-          input.value = val.toFixed(2);
+        if (state.lastCalc && state.lastCalc.E_bruto > 0) {
+          const rounded = Math.round(state.lastCalc.E_bruto * 100) / 100;
+          state.amount = rounded;
+          input.value = rounded;
         }
       } else {
-        tab2.classList.add('active');
-        tab2.setAttribute('aria-selected', 'true');
-        tab1.classList.remove('active');
-        tab1.setAttribute('aria-selected', 'false');
+        tabReceive.classList.add('active');
+        tabReceive.setAttribute('aria-selected', 'true');
+        tabSend.classList.remove('active');
+        tabSend.setAttribute('aria-selected', 'false');
 
-        label.textContent = `2. Monto Neto a Recibir en Destino (${state.currency})`;
-        hint.textContent = 'Importe exacto a acreditar';
-        badge.textContent = state.currency;
+        label.textContent = `Quiero que lleguen exactos a destino (${info.simbolo} ${state.currency})`;
+        badge.textContent = `${info.simbolo} ${state.currency}`;
+        updateQuickChips(info.simbolo);
 
-        if (state.lastResult && state.lastResult.montoNetoDestino > 0) {
-          const val = Number(state.lastResult.montoNetoDestino.toFixed(2));
-          state.inputAmount = val;
-          input.value = val.toFixed(2);
+        if (state.lastCalc && state.lastCalc.montoDestino > 0) {
+          const rounded = Math.round(state.lastCalc.montoDestino * 100) / 100;
+          state.amount = rounded;
+          input.value = rounded;
         }
       }
 
-      calculate();
+      recalculate();
     }
 
     /**
-     * Sanitiza la entrada numérica del usuario evitando negativos o NaN.
+     * Maneja la entrada de monto por teclado.
      */
-    function onAmountChange(rawVal) {
+    function handleAmountInput(rawVal) {
       const parsed = parseFloat(rawVal);
-      if (!Number.isFinite(parsed) || parsed < 0) {
-        state.inputAmount = 0;
-      } else {
-        state.inputAmount = parsed;
-      }
-      calculate();
+      state.amount = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+      recalculate();
     }
 
     /**
-     * Aplica un importe rápido seleccionado por el cliente.
+     * Aplica uno de los montos rápidos de ejemplo.
      */
-    function setQuickAmount(amount) {
-      state.inputAmount = amount;
-      document.getElementById('amount-input').value = amount.toFixed(2);
-      calculate();
+    function setExampleAmount(val) {
+      state.amount = val;
+      document.getElementById('amount-input').value = val;
+      recalculate();
     }
 
     /**
-     * Maneja el cambio de moneda de destino y actualiza el panel de tasa local.
+     * Cambia la cantidad de envíos en los que se divide el capital.
      */
-    function onCurrencyChange(newCurrency) {
+    function handleShipmentsChange(rawVal) {
+      const parsed = parseInt(rawVal, 10);
+      state.shipments = Number.isFinite(parsed) && parsed >= 1 ? parsed : 1;
+      recalculate();
+    }
+
+    /**
+     * Botón directo desde la tarjeta comparativa para volver a 1 envío.
+     */
+    function selectOneShipment() {
+      state.shipments = 1;
+      document.getElementById('shipments-select').value = '1';
+      recalculate();
+      const ahorroFijo = Math.round(FIJO_FINAL_POR_ENVIO * 100) / 100;
+      showToast(`Cambiado a 1 solo envío: ahorras ${fmtEur(ahorroFijo)} adicionales en comisiones`);
+    }
+
+    /**
+     * Restablece toda la calculadora a sus valores iniciales (1.000,00 € en 1 envío).
+     */
+    function resetCalculator() {
+      state.tab = 'send';
+      state.amount = 1000;
+      state.shipments = 1;
+      state.currency = 'USD';
+      state.rate = MONEDAS_DESTINO.USD.tasaPorDefecto;
+
+      const tabSend = document.getElementById('tab-send');
+      const tabReceive = document.getElementById('tab-receive');
+      tabSend.classList.add('active');
+      tabSend.setAttribute('aria-selected', 'true');
+      tabReceive.classList.remove('active');
+      tabReceive.setAttribute('aria-selected', 'false');
+
+      document.getElementById('amount-label').textContent = 'Quiero enviar una cantidad en Euros (€)';
+      document.getElementById('amount-input').value = 1000;
+      document.getElementById('amount-currency-badge').textContent = '€ EUR';
+      updateQuickChips('€');
+
+      document.getElementById('shipments-select').value = '1';
+      document.getElementById('dest-currency-select').value = 'USD';
+      document.getElementById('rate-input').value = MONEDAS_DESTINO.USD.tasaPorDefecto;
+      document.getElementById('rate-unit-label').textContent = '$ USD';
+
+      recalculate();
+      showToast('Cotizador restablecido a 1.000,00 € en 1 envío');
+    }
+
+    /**
+     * Cambia la moneda que recibe el destinatario en Suramérica.
+     */
+    function handleDestCurrencyChange(newCurrency) {
       state.currency = newCurrency;
-      state.customRateActive = false;
-      state.customRateValue = null;
+      const info = MONEDAS_DESTINO[newCurrency];
+      state.rate = info.tasaPorDefecto;
 
-      if (state.mode === 'receive') {
-        document.getElementById('amount-label').textContent = `2. Monto Neto a Recibir en Destino (${newCurrency})`;
-        document.getElementById('input-currency-badge').textContent = newCurrency;
+      document.getElementById('rate-input').value = info.tasaPorDefecto;
+      document.getElementById('rate-unit-label').textContent = `${info.simbolo} ${newCurrency}`;
+
+      if (state.tab === 'receive') {
+        document.getElementById('amount-label').textContent = `Quiero que lleguen exactos a destino (${info.simbolo} ${newCurrency})`;
+        document.getElementById('amount-currency-badge').textContent = `${info.simbolo} ${newCurrency}`;
+        updateQuickChips(info.simbolo);
       }
 
-      const fxBox = document.getElementById('local-fx-box');
-      const customEditor = document.getElementById('custom-fx-editor');
-      const toggleBtn = document.getElementById('toggle-custom-fx-btn');
-
-      if (newCurrency === 'USD') {
-        fxBox.classList.add('hidden');
-        customEditor.classList.add('hidden');
-      } else {
-        fxBox.classList.remove('hidden');
-        customEditor.classList.add('hidden');
-        toggleBtn.textContent = 'Probar tasa referencial local';
-        document.getElementById('custom-fx-input').value = TARIFARIO_COMERCIAL.tasasDestino[newCurrency].tasa;
-      }
-
-      calculate();
+      recalculate();
     }
 
     /**
-     * Muestra u oculta el campo para probar una tasa referencial local.
+     * Permite editar manualmente la tasa de cambio aplicada.
      */
-    function toggleCustomRateEditor() {
-      const editor = document.getElementById('custom-fx-editor');
-      const toggleBtn = document.getElementById('toggle-custom-fx-btn');
-      const isHidden = editor.classList.contains('hidden');
-
-      if (isHidden) {
-        editor.classList.remove('hidden');
-        toggleBtn.textContent = 'Ocultar ajuste de tasa';
-        const input = document.getElementById('custom-fx-input');
-        input.value = getActiveDestinationRate();
-        input.focus();
-      } else {
-        editor.classList.add('hidden');
-        toggleBtn.textContent = 'Probar tasa referencial local';
-      }
-    }
-
-    /**
-     * Aplica tasa local personalizada ingresada por el cliente.
-     */
-    function onCustomRateInput(rawVal) {
+    function handleRateInput(rawVal) {
       const parsed = parseFloat(rawVal);
       if (Number.isFinite(parsed) && parsed > 0) {
-        state.customRateActive = true;
-        state.customRateValue = parsed;
+        state.rate = parsed;
       } else {
-        state.customRateActive = false;
-        state.customRateValue = null;
+        state.rate = MONEDAS_DESTINO[state.currency].tasaPorDefecto;
       }
-      calculate();
+      recalculate();
     }
 
     /**
-     * Restaura la tasa de cambio oficial del tarifario comercial.
+     * Restaura la tasa de cambio por defecto de la moneda de destino seleccionada.
      */
-    function resetDefaultDestinationRate() {
-      if (state.currency === 'USD') return;
-      state.customRateActive = false;
-      state.customRateValue = null;
-      const officialRate = TARIFARIO_COMERCIAL.tasasDestino[state.currency].tasa;
-      document.getElementById('custom-fx-input').value = officialRate;
-      calculate();
-      showToast('Tasa de cambio oficial restablecida.');
+    function resetCurrentCurrencyRate() {
+      const info = MONEDAS_DESTINO[state.currency];
+      state.rate = info.tasaPorDefecto;
+      document.getElementById('rate-input').value = info.tasaPorDefecto;
+      recalculate();
+      showToast(`Tasa de cambio restaurada a 1 € = ${fmt(info.tasaPorDefecto, info.decimalesTasa)} ${info.simbolo}`);
     }
 
     /**
-     * Actualiza nombre de cliente y concepto en la tarjeta de cotización.
+     * MOTOR PRINCIPAL DE CÁLCULO EN TIEMPO REAL
+     * Calcula los 3 pasos para el cliente y actualiza el comparador 1 envío vs 2 envíos.
      */
-    function updateQuoteMetadata() {
-      state.clientName = document.getElementById('client-name-input').value.trim();
-      state.concept = document.getElementById('concept-input').value.trim();
+    function recalculate() {
+      const N = state.shipments;
+      const infoDest = MONEDAS_DESTINO[state.currency] || MONEDAS_DESTINO.USD;
+      const tasa = state.rate > 0 ? state.rate : infoDest.tasaPorDefecto;
 
-      const clientItem = document.getElementById('meta-client-item');
-      const clientVal = document.getElementById('meta-client-val');
-      const conceptVal = document.getElementById('meta-concept-val');
+      let E_bruto = 0;
+      let comisionNormal = 0;
+      let comisionFinal = 0;
+      let ahorroDescuento = 0;
+      let eurosLimpios = 0;
+      let montoDestino = 0;
 
-      if (state.clientName) {
-        clientItem.classList.remove('hidden');
-        clientVal.textContent = state.clientName;
-      } else {
-        clientItem.classList.add('hidden');
-        clientVal.textContent = '';
-      }
+      const minWarningBox = document.getElementById('min-warning-box');
+      const minWarningText = document.getElementById('min-warning-text');
 
-      conceptVal.textContent = state.concept || DEFAULT_CONCEPT;
-    }
+      if (state.tab === 'send') {
+        // Pestaña 1: Quiero enviar una cantidad en Euros (€)
+        E_bruto = state.amount;
 
-    /**
-     * MOTOR MATEMÁTICO PRINCIPAL (CÁLCULO DIRECTO E INVERSO)
-     */
-    function calculate() {
-      const { tasaEurUsd, comisionPorcentual, tarifaFijaEur, tasasDestino } = TARIFARIO_COMERCIAL;
-      const destMeta = tasasDestino[state.currency];
-      const tasaDestinoActual = getActiveDestinationRate();
+        if (E_bruto > 0) {
+          const rawNormal = (E_bruto * TASA_COMISION_NORMAL) + (FIJO_NORMAL_POR_ENVIO * N);
+          comisionNormal = Math.round(rawNormal * 100) / 100;
+          ahorroDescuento = Math.round((comisionNormal * FACTOR_DESCUENTO) * 100) / 100;
+          comisionFinal = Math.round((comisionNormal - ahorroDescuento) * 100) / 100;
+          eurosLimpios = Math.round((E_bruto - comisionFinal) * 100) / 100;
 
-      // Actualizar indicador de tasa local si aplica
-      if (state.currency !== 'USD') {
-        const dec = tasaDestinoActual >= 100 ? 2 : 4;
-        document.getElementById('fx-rate-display').textContent =
-          `1 USD = ${formatNumber(tasaDestinoActual, dec)} ${state.currency}`;
-      }
-
-      let montoEur = 0;
-      let comisionTotalEur = 0;
-      let porcentajeEfectivo = 0;
-      let netoEur = 0;
-      let netoUsd = 0;
-      let montoNetoDestino = 0;
-      let showMinWarning = false;
-
-      if (state.mode === 'send') {
-        // MODO 1: Cliente ingresa Monto Bruto en EUR
-        montoEur = state.inputAmount;
-
-        if (montoEur > 0) {
-          comisionTotalEur = (montoEur * comisionPorcentual) + tarifaFijaEur;
-          porcentajeEfectivo = (comisionTotalEur / montoEur) * 100;
-          netoEur = Math.max(0, montoEur - comisionTotalEur);
-          netoUsd = netoEur * tasaEurUsd;
-          montoNetoDestino = netoUsd * tasaDestinoActual;
-
-          if (netoEur === 0) {
-            showMinWarning = true;
+          if (eurosLimpios <= 0) {
+            const minimoNecesario = ((FIJO_FINAL_POR_ENVIO * N) / (1 - TASA_COMISION_FINAL)) + 0.10;
+            minWarningText.textContent = `Para ${N === 1 ? '1 envío' : `${N} envíos`}, ingresa un monto superior a ${fmtEur(minimoNecesario)} para cubrir los costos operativos y enviar saldo neto.`;
+            minWarningBox.classList.remove('hidden');
+            eurosLimpios = 0;
+            montoDestino = 0;
+          } else {
+            minWarningBox.classList.add('hidden');
+            montoDestino = eurosLimpios * tasa;
           }
+        } else {
+          minWarningBox.classList.add('hidden');
         }
       } else {
-        // MODO 2: Cliente ingresa Monto Neto Objetivo en Destino
-        const montoObjetivoDestino = state.inputAmount;
+        // Pestaña 2: Quiero que lleguen exactos a destino ($)
+        minWarningBox.classList.add('hidden');
+        montoDestino = state.amount;
 
-        if (montoObjetivoDestino > 0) {
-          const netoUsdRequerido = montoObjetivoDestino / tasaDestinoActual;
-          const netoEurRequerido = netoUsdRequerido / tasaEurUsd;
-          const montoEurExacto = (netoEurRequerido + tarifaFijaEur) / (1 - comisionPorcentual);
-
-          montoEur = Math.round(montoEurExacto * 100) / 100;
-          comisionTotalEur = Math.max(0, montoEur - netoEurRequerido);
-          porcentajeEfectivo = montoEur > 0 ? (comisionTotalEur / montoEur) * 100 : 0;
-          netoEur = netoEurRequerido;
-          netoUsd = netoUsdRequerido;
-          montoNetoDestino = montoObjetivoDestino;
+        if (montoDestino > 0) {
+          eurosLimpios = Math.round((montoDestino / tasa) * 100) / 100;
+          const brutoEstimado = (eurosLimpios + (FIJO_FINAL_POR_ENVIO * N)) / (1 - TASA_COMISION_FINAL);
+          comisionNormal = Math.round(((brutoEstimado * TASA_COMISION_NORMAL) + (FIJO_NORMAL_POR_ENVIO * N)) * 100) / 100;
+          ahorroDescuento = Math.round((comisionNormal * FACTOR_DESCUENTO) * 100) / 100;
+          comisionFinal = Math.round((comisionNormal - ahorroDescuento) * 100) / 100;
+          E_bruto = Math.round((eurosLimpios + comisionFinal) * 100) / 100;
         }
       }
 
-      // Mostrar u ocultar advertencia de importe mínimo operativo
-      const alertBox = document.getElementById('min-amount-alert');
-      if (showMinWarning) {
-        const minEur = (tarifaFijaEur / (1 - comisionPorcentual)) + 0.01;
-        document.getElementById('min-amount-detail').textContent =
-          `Ingrese un monto superior a €${formatNumber(minEur, 2)} EUR para cubrir la tarifa fija de liquidación.`;
-        alertBox.classList.remove('hidden');
+      // ===================================================================
+      // ACTUALIZAR TARJETAS DE LOS 3 PASOS
+      // ===================================================================
+      document.getElementById('step1-amount').textContent = fmtEur(E_bruto);
+      document.getElementById('step1-note').innerHTML = N === 1
+        ? `En <strong>1 sola transferencia</strong> desde Europa.`
+        : `Dividido en <strong>${N} envíos de ${fmtEur(E_bruto / N)}</strong> cada uno.`;
+
+      document.getElementById('step2-normal-fee').textContent = fmtEur(comisionNormal);
+      document.getElementById('step2-discount-saved').textContent = `-${fmtEur(ahorroDescuento)}`;
+      document.getElementById('step2-final-fee').textContent = fmtEur(comisionFinal);
+
+      const perShipmentNote = document.getElementById('step2-per-shipment-note');
+      if (N > 1 && E_bruto > 0) {
+        perShipmentNote.textContent = `(Equivale a ${fmtEur(comisionFinal / N)} de comisión por cada envío de ${fmtEur(E_bruto / N)})`;
+        perShipmentNote.classList.remove('hidden');
       } else {
-        alertBox.classList.add('hidden');
+        perShipmentNote.classList.add('hidden');
       }
 
-      // Renderizado de cifras en la Tarjeta Ejecutiva
-      document.getElementById('out-gross-eur').textContent = `€${formatNumber(montoEur, 2)} EUR`;
-      document.getElementById('out-fee-eur').textContent = `€${formatNumber(comisionTotalEur, 2)} EUR`;
-      document.getElementById('out-fee-pct').textContent = `(${formatNumber(porcentajeEfectivo, 2)}% efectivo)`;
-      document.getElementById('out-net-usd').textContent = `$${formatNumber(netoUsd, 2)} USD`;
+      document.getElementById('step3-currency-tag').textContent = `Moneda en destino: ${infoDest.nombre}`;
+      document.getElementById('step3-amount').textContent = fmtDest(montoDestino, state.currency);
+      document.getElementById('step3-math-detail').textContent =
+        `${fmtEur(eurosLimpios)} limpios × tasa ${fmt(tasa, infoDest.decimalesTasa)} = ${fmtDest(montoDestino, state.currency)}`;
 
-      if (state.currency === 'USD') {
-        document.getElementById('out-rate-badge').textContent = `1 EUR = ${formatNumber(tasaEurUsd, 4)} USD`;
-        document.getElementById('out-rate-sub').textContent = 'Paridad base EUR/USD de liquidación';
+      // ===================================================================
+      // ACTUALIZAR COMPARADOR AUTOMÁTICO: "1 ENVÍO VS 2 ENVÍOS"
+      // ===================================================================
+      const montoBaseComparar = E_bruto > 0 ? E_bruto : 1000;
+      const mitadMonto = montoBaseComparar / 2;
+
+      // Escenario A: 1 solo envío
+      const comisionNormal1Envio = Math.round(((montoBaseComparar * TASA_COMISION_NORMAL) + FIJO_NORMAL_POR_ENVIO) * 100) / 100;
+      const ahorroDto1Envio = Math.round((comisionNormal1Envio * FACTOR_DESCUENTO) * 100) / 100;
+      const comision1Envio = Math.round((comisionNormal1Envio - ahorroDto1Envio) * 100) / 100;
+      const limpios1Envio = Math.max(0, Math.round((montoBaseComparar - comision1Envio) * 100) / 100);
+      const destino1Envio = limpios1Envio * tasa;
+
+      // Escenario B: 2 envíos iguales
+      const comisionNormalCadaUnoDe2 = Math.round(((mitadMonto * TASA_COMISION_NORMAL) + FIJO_NORMAL_POR_ENVIO) * 100) / 100;
+      const ahorroDtoCadaUnoDe2 = Math.round((comisionNormalCadaUnoDe2 * FACTOR_DESCUENTO) * 100) / 100;
+      const comisionCadaUnoDe2 = Math.round((comisionNormalCadaUnoDe2 - ahorroDtoCadaUnoDe2) * 100) / 100;
+      const comisionTotal2Envios = Math.round((comisionCadaUnoDe2 * 2) * 100) / 100;
+      const limpios2Envios = Math.max(0, Math.round((montoBaseComparar - comisionTotal2Envios) * 100) / 100);
+      const destino2Envios = limpios2Envios * tasa;
+
+      const ahorroAlJuntar = Math.max(0, Math.round((comisionTotal2Envios - comision1Envio) * 100) / 100);
+      const fijoConDescuento = Math.round(FIJO_FINAL_POR_ENVIO * 100) / 100;
+
+      document.getElementById('compare-subtitle').textContent =
+        `Comparación automática para tus ${fmtEur(montoBaseComparar)} (con tu 15% de descuento ya aplicado en ambas opciones):`;
+
+      document.getElementById('cmp-1-title').textContent = `1 solo envío de ${fmtEur(montoBaseComparar)}`;
+      document.getElementById('cmp-save-badge').textContent = `Ahorras ${fmtEur(ahorroAlJuntar)} extra`;
+      document.getElementById('cmp-1-normal-fee').textContent = fmtEur(comisionNormal1Envio);
+      document.getElementById('cmp-1-fee').textContent = `${fmtEur(comision1Envio)} (ahorras ${fmtEur(ahorroDto1Envio)})`;
+      document.getElementById('cmp-1-net').textContent = fmtDest(destino1Envio, state.currency);
+
+      document.getElementById('cmp-2-title').textContent = `2 envíos de ${fmtEur(mitadMonto)} cada uno`;
+      document.getElementById('cmp-2-fee-each').textContent = `${fmtEur(comisionCadaUnoDe2)} (normal ${fmtEur(comisionNormalCadaUnoDe2)})`;
+      document.getElementById('cmp-2-fee-total').textContent = `${fmtEur(comisionTotal2Envios)} en total`;
+      document.getElementById('cmp-2-net').textContent = fmtDest(destino2Envios, state.currency);
+
+      document.getElementById('compare-explanation').innerHTML =
+        `<strong>Conclusión:</strong> Al enviar todo en <strong>1 sola transferencia</strong> ahorras <strong>${fmtEur(ahorroAlJuntar)} adicionales</strong> respecto a dividirlo en dos envíos (porque cada transferencia individual lleva un costo fijo operativo de <strong>${fmtEur(fijoConDescuento)}</strong> con tu 15% de descuento).`;
+      if (state.shipments > 1) {
+        switchBtn.textContent = `Elegir 1 solo envío y ahorrar ${fmtEur(ahorroAlJuntar)} adicionales`;
+        switchBtn.classList.remove('hidden');
       } else {
-        const dec = tasaDestinoActual >= 100 ? 2 : 4;
-        document.getElementById('out-rate-badge').textContent =
-          `1 EUR = ${formatNumber(tasaEurUsd, 4)} USD | 1 USD = ${formatNumber(tasaDestinoActual, dec)} ${state.currency}`;
-        document.getElementById('out-rate-sub').textContent =
-          state.customRateActive ? 'Con tasa referencial local aplicada' : 'Tasa oficial de conversión aplicada';
+        switchBtn.classList.add('hidden');
       }
 
-      document.getElementById('out-net-dest').textContent =
-        `${destMeta.simbolo}${formatNumber(montoNetoDestino, 2)} ${state.currency}`;
-      document.getElementById('out-dest-currency-label').textContent = destMeta.nombre;
-
-      // Almacenar resultado para exportación de resumen
-      state.lastResult = {
-        montoEur,
-        comisionTotalEur,
-        porcentajeEfectivo,
-        netoUsd,
-        montoNetoDestino,
-        tasaEurUsd,
-        tasaDestinoActual,
+      // Guardar snapshot para copiar por WhatsApp
+      state.lastCalc = {
+        E_bruto,
+        N,
+        comisionNormal,
+        ahorroDescuento,
+        comisionFinal,
+        eurosLimpios,
+        montoDestino,
+        tasa,
         currency: state.currency,
-        destMeta
+        infoDest
       };
     }
 
     /**
-     * Copia un resumen ejecutivo limpio al portapapeles para correo o WhatsApp.
+     * Copia al portapapeles un resumen limpio, claro y amigable listo para WhatsApp.
      */
-    function copyExecutiveSummary() {
-      const r = state.lastResult;
-      if (!r || r.montoEur <= 0 || r.montoNetoDestino <= 0) {
-        showToast('Ingrese un importe válido antes de copiar el resumen.');
+    function copyWhatsAppSummary() {
+      const c = state.lastCalc;
+      if (!c || c.E_bruto <= 0 || c.montoDestino <= 0) {
+        showToast('Ingresa un monto válido para copiar el resumen.');
         return;
       }
 
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('es-ES', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
-      const timeStr = now.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      const detalleEnvios = c.N === 1
+        ? '(en 1 sola transferencia)'
+        : `(en ${c.N} envíos de ${fmtEur(c.E_bruto / c.N)})`;
 
-      const rateLine = r.currency === 'USD'
-        ? `1 EUR = ${formatNumber(r.tasaEurUsd, 4)} USD`
-        : `1 EUR = ${formatNumber(r.tasaEurUsd, 4)} USD | 1 USD = ${formatNumber(r.tasaDestinoActual, r.tasaDestinoActual >= 100 ? 2 : 4)} ${r.currency}`;
-
-      const lines = [
-        `EUROLATAM PAY — COTIZACIÓN EJECUTIVA`,
-        `Referencia: ${state.quoteId}`,
-        `Fecha: ${dateStr} ${timeStr}`,
-        `----------------------------------------`
+      const lineas = [
+        `*RESUMEN DE ENVÍO EUROPA → SURAMÉRICA*`,
+        `🎁 *Promoción aplicada: 15% de descuento en la comisión del servicio*`,
+        ``,
+        `1️⃣ *Tú envías desde Europa:* ${fmtEur(c.E_bruto)} ${detalleEnvios}`,
+        `2️⃣ *Comisión total (siempre en Euros €):* ${fmtEur(c.comisionFinal)}`,
+        `   _(Tarifa normal: ${fmtEur(c.comisionNormal)} | Tu descuento 15%: -${fmtEur(c.ahorroDescuento)})_`,
+        `3️⃣ *Tu destinatario recibe neto en Suramérica:* *${fmtDest(c.montoDestino, c.currency)}*`,
+        `   _(Tasa aplicada: 1 € = ${fmt(c.tasa, c.infoDest.decimalesTasa)} ${c.infoDest.simbolo})_`,
+        ``,
+        `✅ *Dinero limpio a recibir, libre de descuentos adicionales.*`
       ];
 
-      if (state.clientName) {
-        lines.push(`Cliente: ${state.clientName}`);
-      }
-      lines.push(`Concepto: ${state.concept || DEFAULT_CONCEPT}`);
-      lines.push(`----------------------------------------`);
-      lines.push(`• Monto a Transferir desde Europa: €${formatNumber(r.montoEur, 2)} EUR`);
-      lines.push(`• Comisión Integral del Servicio (Todo Incluido): €${formatNumber(r.comisionTotalEur, 2)} EUR (${formatNumber(r.porcentajeEfectivo, 2)}%)`);
-      lines.push(`• Equivalente Neto Liquidado: $${formatNumber(r.netoUsd, 2)} USD`);
-      lines.push(`• Tasa de Cambio Aplicada: ${rateLine}`);
-      lines.push(`----------------------------------------`);
-      lines.push(`MONTO NETO GARANTIZADO EN DESTINO:`);
-      lines.push(`${r.destMeta.simbolo}${formatNumber(r.montoNetoDestino, 2)} ${r.currency} (${r.destMeta.nombre})`);
-      lines.push(`----------------------------------------`);
-      lines.push(`Importe neto final acreditado en destino, libre de cargos adicionales.`);
+      const texto = lineas.join('\n');
 
-      const summaryText = lines.join('\n');
-
-      const helper = document.createElement('textarea');
-      helper.value = summaryText;
-      helper.setAttribute('readonly', '');
-      helper.style.position = 'fixed';
-      helper.style.opacity = '0';
-      document.body.appendChild(helper);
-      helper.select();
+      const textarea = document.createElement('textarea');
+      textarea.value = texto;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
 
       try {
-        document.execCommand('copy');
-        showToast('Resumen copiado al portapapeles');
+        const copiado = document.execCommand('copy');
+        if (copiado) {
+          showToast('Resumen copiado listo para pegar en WhatsApp');
+        } else {
+          showToast('No se pudo copiar automáticamente al portapapeles.');
+        }
       } catch (err) {
-        showToast('No se pudo copiar automáticamente al portapapeles.');
+        showToast('Error al acceder al portapapeles.');
       } finally {
-        document.body.removeChild(helper);
+        document.body.removeChild(textarea);
       }
     }
 
-    /**
-     * Restablece la calculadora a su estado inicial por defecto (€5,000.00).
-     */
-    function resetCalculator() {
-      state.mode = 'send';
-      state.inputAmount = 5000.00;
-      state.currency = 'USD';
-      state.customRateActive = false;
-      state.customRateValue = null;
-      state.clientName = '';
-      state.concept = '';
-      state.quoteId = buildQuoteReference();
-
-      // Restablecer pestañas
-      const tab1 = document.getElementById('tab-mode-1');
-      const tab2 = document.getElementById('tab-mode-2');
-      tab1.classList.add('active');
-      tab1.setAttribute('aria-selected', 'true');
-      tab2.classList.remove('active');
-      tab2.setAttribute('aria-selected', 'false');
-
-      document.getElementById('amount-label').textContent = '2. Monto a Enviar desde Europa (EUR)';
-      document.getElementById('amount-hint').textContent = 'Capital bruto en origen';
-      document.getElementById('input-currency-badge').textContent = 'EUR';
-      document.getElementById('amount-input').value = '5000.00';
-
-      document.getElementById('currency-select').value = 'USD';
-      document.getElementById('local-fx-box').classList.add('hidden');
-      document.getElementById('custom-fx-editor').classList.add('hidden');
-
-      document.getElementById('client-name-input').value = '';
-      document.getElementById('concept-input').value = '';
-
-      renderDateAndId();
-      updateQuoteMetadata();
-      calculate();
-      showToast('Cotizador restablecido a €5,000.00 EUR');
-    }
-
-    /**
-     * Muestra una notificación Toast no intrusiva.
-     */
-    function showToast(message) {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `<span class="toast-dot"></span><span>${message}</span>`;
-      container.appendChild(toast);
-
-      requestAnimationFrame(() => {
-        toast.classList.add('show');
-      });
-
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 260);
-      }, 3000);
-    }
-
-    // Inicialización al cargar la página
+    // Inicializar cálculos al cargar la página
     window.addEventListener('DOMContentLoaded', () => {
-      renderDateAndId();
-      updateQuoteMetadata();
-      calculate();
+      recalculate();
     });
   </script>
 </body>
