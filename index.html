@@ -455,6 +455,88 @@
       border-color: var(--slate-500);
     }
 
+    .fx-market-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--emerald-700);
+      background-color: var(--emerald-50);
+      border: 1px solid var(--emerald-100);
+      padding: 0.28rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    /* Tabla Compacta de Tramos por Volumen */
+    .tiers-box {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .tier-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--slate-200);
+      background-color: var(--slate-50);
+      font-size: 0.8125rem;
+      transition: all 0.15s ease;
+    }
+
+    .tier-item.active {
+      background-color: var(--emerald-50);
+      border-color: var(--emerald-500);
+      box-shadow: 0 0 0 1px var(--emerald-500);
+    }
+
+    .tier-item-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tier-name {
+      font-weight: 800;
+      color: var(--navy-900);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tier-active-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background-color: var(--emerald-600);
+      color: var(--white);
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .tier-range {
+      font-size: 0.75rem;
+      color: var(--slate-600);
+    }
+
+    .tier-rate {
+      text-align: right;
+      font-weight: 800;
+      color: var(--emerald-700);
+    }
+
+    .tier-rate del {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--slate-500);
+    }
+
     /* =====================================================================
        COLUMNA DERECHA: LOS 3 PASOS CLAROS PARA EL CLIENTE
        ===================================================================== */
@@ -924,10 +1006,18 @@
     .footer {
       background-color: var(--white);
       border-top: 1px solid var(--slate-200);
-      padding: 1.125rem 0;
+      padding: 1.25rem 0;
       font-size: 0.75rem;
       color: var(--slate-500);
       text-align: center;
+      line-height: 1.55;
+    }
+
+    .footer-compliance {
+      max-width: 52rem;
+      margin: 0.35rem auto 0;
+      color: var(--slate-600);
+      font-weight: 500;
     }
 
     /* Toast de Confirmación */
@@ -1026,18 +1116,18 @@
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
             </svg>
           </span>
-          <span>Envíos Europa → Suramérica</span>
+          <span>Gestión Privada B2B • Envíos Europa → Suramérica</span>
         </div>
 
         <div class="offer-badge-top">
           <span class="offer-dot"></span>
-          <span>Promoción activa: 15% de descuento ya aplicado en la comisión del servicio</span>
+          <span>Promoción activa: 15% de descuento + tarifas escalonadas por volumen</span>
         </div>
       </div>
 
       <h1 class="header-title">Cotizador Simple — Envíos Europa a Suramérica</h1>
       <p class="header-subtitle">
-        Calcula en 3 pasos cuántos euros envías, cuánto es la comisión con tu 15% de descuento y cuánto dinero limpio llega a Suramérica
+        Calcula en 3 pasos cuántos euros envías, tu tarifa preferencial según volumen con 15% de descuento y el importe neto garantizado en destino a tasa de mercado
       </p>
     </div>
   </header>
@@ -1104,10 +1194,46 @@
 
           <div class="quick-row">
             <span class="quick-text">Ejemplos rápidos:</span>
-            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(500)" id="chip-500">500 €</button>
             <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(1000)" id="chip-1000">1.000 €</button>
-            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(1500)" id="chip-1500">1.500 €</button>
-            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(2000)" id="chip-2000">2.000 €</button>
+            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(3000)" id="chip-3000">3.000 €</button>
+            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(6000)" id="chip-6000">6.000 €</button>
+            <button type="button" class="chip-btn tabular-nums" onclick="setExampleAmount(10000)" id="chip-10000">10.000 €</button>
+          </div>
+
+          <!-- Escala Automática por Volumen -->
+          <div class="tiers-box" aria-label="Descuentos automáticos por volumen">
+            <div id="tier-card-1" class="tier-item active">
+              <div class="tier-item-left">
+                <span class="tier-name">Tramo 1 · Estándar <span id="tier-badge-1" class="tier-active-tag">Activo</span></span>
+                <span class="tier-range">Hasta 1.500,00 € por operación</span>
+              </div>
+              <div class="tier-rate tabular-nums">
+                <del>4,10% + 5,90 €</del>
+                3,49% + 5,02 €
+              </div>
+            </div>
+
+            <div id="tier-card-2" class="tier-item">
+              <div class="tier-item-left">
+                <span class="tier-name">Tramo 2 · Volumen Medio <span id="tier-badge-2" class="tier-active-tag hidden">Activo</span></span>
+                <span class="tier-range">De 1.500,01 € a 5.000,00 €</span>
+              </div>
+              <div class="tier-rate tabular-nums">
+                <del>2,80% + 5,90 €</del>
+                2,38% + 5,02 €
+              </div>
+            </div>
+
+            <div id="tier-card-3" class="tier-item">
+              <div class="tier-item-left">
+                <span class="tier-name">Tramo 3 · Empresarial / Nóminas <span id="tier-badge-3" class="tier-active-tag hidden">Activo</span></span>
+                <span class="tier-range">Más de 5.000,00 €</span>
+              </div>
+              <div class="tier-rate tabular-nums">
+                <del>1,90% + 5,90 €</del>
+                1,62% + 5,02 €
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1164,12 +1290,15 @@
                 inputmode="decimal"
                 min="0.0001"
                 step="any"
-                value="1.08"
+                value="1.095"
                 oninput="handleRateInput(this.value)"
                 class="rate-input tabular-nums"
               />
               <span id="rate-unit-label" class="rate-suffix">$ USD</span>
               <button type="button" class="rate-reset-btn" onclick="resetCurrentCurrencyRate()">Restaurar</button>
+            </div>
+            <div id="fx-market-badge" class="fx-market-badge">
+              <span>✓ Alineada a mercado interbancario (sin margen oculto en el cambio)</span>
             </div>
             <p class="control-helper" style="margin-top: 0.45rem;">
               Por cada 1 euro limpio que se envía después de la comisión, el destinatario recibe esta cantidad.
@@ -1214,18 +1343,18 @@
         <article class="step-card step-2">
           <div class="step-header">
             <span class="step-pill">Paso 2</span>
-            <span class="discount-chip">DESCUENTO PROMOCIONAL: 15% APLICADO</span>
+            <span id="step2-tier-badge" class="discount-chip">TRAMO 1 ESTÁNDAR + 15% DESCUENTO</span>
           </div>
           <h2 class="step-title">Comisión total del servicio (con 15% de descuento)</h2>
 
           <div class="fee-breakdown">
             <div class="fee-line fee-line-normal">
-              <span>Tarifa normal (4,10% + 5,90 € por envío):</span>
+              <span id="step2-normal-label">Tarifa normal Tramo 1 (4,10% + 5,90 € por envío):</span>
               <del id="step2-normal-fee" class="tabular-nums">46,90 €</del>
             </div>
 
             <div class="fee-line fee-line-discount">
-              <span>Tu descuento (15%):</span>
+              <span>Tu descuento promocional (15%):</span>
               <span id="step2-discount-saved" class="tabular-nums">-7,04 €</span>
             </div>
 
@@ -1254,9 +1383,9 @@
             <span id="step3-currency-tag" style="font-size: 0.75rem; color: #d1fae5; font-weight: 700;">Moneda en destino: Dólares Americanos (USD $)</span>
           </div>
           <h2 class="step-title">Tu destinatario recibe neto en Suramérica</h2>
-          <div id="step3-amount" class="step-amount tabular-nums">1.036,95 $</div>
+          <div id="step3-amount" class="step-amount tabular-nums">1.051,35 $</div>
           <p id="step3-math-detail" class="step-math tabular-nums">
-            960,14 € limpios × tasa 1,08 = 1.036,95 $
+            960,14 € limpios × tasa 1,095 = 1.051,35 $
           </p>
           <p class="step-guarantee">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
@@ -1383,7 +1512,10 @@
   <!-- ===================================================================== -->
   <footer class="footer">
     <div class="container">
-      Cotizador Simple — Envíos Europa a Suramérica • Cifras claras sin cargos ocultos • Promoción vigente: 15% de descuento en la comisión del servicio.
+      <div>Cotizador Privado B2B — Envíos Europa a Suramérica • Tarifas escalonadas por volumen y tipo de cambio alineado al mercado.</div>
+      <div class="footer-compliance">
+        Herramienta privada de gestión de tesorería para clientes corporativos registrados y pagos de nómina internacional. Toda operación está sujeta a validación previa de origen de fondos y cumplimiento normativo (KYC/AML).
+      </div>
     </div>
   </footer>
 
@@ -1398,53 +1530,90 @@
   <!-- ===================================================================== -->
   <script>
     /**
-     * PARÁMETROS DE COMISIÓN Y DESCUENTO PROMOCIONAL (-15%)
-     * Tarifa estándar habitual: 4,10% + 5,90 € fijos por cada envío (46,90 € por cada 1.000 €).
-     * Con 15% de descuento directo sobre la comisión total: 3,485% + 5,015 € fijos por cada envío.
+     * PARÁMETROS DE COMISIÓN ESCALONADA POR VOLUMEN Y DESCUENTO PROMOCIONAL (-15%)
+     * - Tramo 1 (Hasta 1.500,00 €): 4,10% + 5,90 € por envío (46,90 € por 1.000 € -> 39,86 € con 15% dto.)
+     * - Tramo 2 (1.500,01 € a 5.000,00 €): 2,80% + 5,90 € por envío (-> 2,38% + 5,02 € con 15% dto.)
+     * - Tramo 3 (Más de 5.000,00 €): 1,90% + 5,90 € por envío (-> 1,62% + 5,02 € con 15% dto.)
      */
-    const TASA_COMISION_NORMAL = 0.041;
     const FIJO_NORMAL_POR_ENVIO = 5.90;
     const FACTOR_DESCUENTO = 0.15; // 15% de descuento directo sobre la comisión total
+    const FIJO_FINAL_POR_ENVIO = FIJO_NORMAL_POR_ENVIO * (1 - FACTOR_DESCUENTO); // 5.015 €
 
-    const TASA_COMISION_FINAL = TASA_COMISION_NORMAL * (1 - FACTOR_DESCUENTO); // 0.03485
-    const FIJO_FINAL_POR_ENVIO = FIJO_NORMAL_POR_ENVIO * (1 - FACTOR_DESCUENTO);  // 5.015 €
+    const TRAMOS_VOLUMEN = [
+      {
+        id: 1,
+        nombre: 'Tramo 1 · Estándar',
+        etiquetaCorta: 'TRAMO 1 ESTÁNDAR',
+        maxEur: 1500,
+        tasaNormal: 0.041
+      },
+      {
+        id: 2,
+        nombre: 'Tramo 2 · Volumen Medio',
+        etiquetaCorta: 'TRAMO 2 VOLUMEN MEDIO',
+        maxEur: 5000,
+        tasaNormal: 0.028
+      },
+      {
+        id: 3,
+        nombre: 'Tramo 3 · Empresarial / Nóminas',
+        etiquetaCorta: 'TRAMO 3 EMPRESARIAL',
+        maxEur: Infinity,
+        tasaNormal: 0.019
+      }
+    ];
+
+    /**
+     * Devuelve el tramo tarifario correspondiente al capital total gestionado en EUR.
+     */
+    function obtenerTramoPorMonto(montoEur) {
+      if (montoEur <= 1500) return TRAMOS_VOLUMEN[0];
+      if (montoEur <= 5000) return TRAMOS_VOLUMEN[1];
+      return TRAMOS_VOLUMEN[2];
+    }
 
     const MONEDAS_DESTINO = {
       USD: {
         nombre: 'Dólares Americanos (USD $)',
         simbolo: '$',
-        tasaPorDefecto: 1.08,
-        decimalesTasa: 2
+        tasaPorDefecto: 1.095,
+        decimalesTasa: 3,
+        esInterbancaria: true
       },
       VES: {
         nombre: 'Bolívares — Venezuela (VES Bs.)',
         simbolo: 'Bs.',
         tasaPorDefecto: 52.50,
-        decimalesTasa: 2
+        decimalesTasa: 2,
+        esInterbancaria: false
       },
       COP: {
         nombre: 'Pesos Colombianos — Colombia (COP $)',
         simbolo: '$',
         tasaPorDefecto: 4720.00,
-        decimalesTasa: 2
+        decimalesTasa: 2,
+        esInterbancaria: false
       },
       ARS: {
         nombre: 'Pesos Argentinos — Argentina (ARS $)',
         simbolo: '$',
         tasaPorDefecto: 1280.00,
-        decimalesTasa: 2
+        decimalesTasa: 2,
+        esInterbancaria: false
       },
       PEN: {
         nombre: 'Soles Peruanos — Perú (PEN S/)',
         simbolo: 'S/',
         tasaPorDefecto: 4.08,
-        decimalesTasa: 2
+        decimalesTasa: 2,
+        esInterbancaria: false
       },
       CLP: {
         nombre: 'Pesos Chilenos — Chile (CLP $)',
         simbolo: '$',
         tasaPorDefecto: 1045.00,
-        decimalesTasa: 2
+        decimalesTasa: 2,
+        esInterbancaria: false
       }
     };
 
@@ -1453,7 +1622,7 @@
       amount: 1000,     // Valor ingresado en el campo principal
       shipments: 1,     // Número de envíos en que se divide la operación
       currency: 'USD',  // Moneda de destino seleccionada
-      rate: 1.08,       // Tasa aplicada por cada 1 € limpio enviado
+      rate: 1.095,      // Tasa aplicada por cada 1 € limpio enviado
       lastCalc: null    // Snapshot de los resultados actuales
     };
 
@@ -1494,10 +1663,28 @@
      * Actualiza los botones de ejemplos rápidos según la moneda activa del input.
      */
     function updateQuickChips(simbolo) {
-      [500, 1000, 1500, 2000].forEach(val => {
+      [1000, 3000, 6000, 10000].forEach(val => {
         const el = document.getElementById(`chip-${val}`);
         if (el) {
           el.textContent = `${fmt(val, 0)} ${simbolo}`;
+        }
+      });
+    }
+
+    /**
+     * Resalta visualmente el tramo por volumen activo en la interfaz.
+     */
+    function updateActiveTierUI(activeTierId) {
+      TRAMOS_VOLUMEN.forEach(t => {
+        const card = document.getElementById(`tier-card-${t.id}`);
+        const badge = document.getElementById(`tier-badge-${t.id}`);
+        if (!card || !badge) return;
+        if (t.id === activeTierId) {
+          card.classList.add('active');
+          badge.classList.remove('hidden');
+        } else {
+          card.classList.remove('active');
+          badge.classList.add('hidden');
         }
       });
     }
@@ -1632,6 +1819,7 @@
       document.getElementById('dest-currency-select').value = 'USD';
       document.getElementById('rate-input').value = MONEDAS_DESTINO.USD.tasaPorDefecto;
       document.getElementById('rate-unit-label').textContent = '$ USD';
+      document.getElementById('fx-market-badge').classList.remove('hidden');
 
       recalculate();
       showToast('Cotizador restablecido a 1.000,00 € en 1 envío');
@@ -1647,6 +1835,15 @@
 
       document.getElementById('rate-input').value = info.tasaPorDefecto;
       document.getElementById('rate-unit-label').textContent = `${info.simbolo} ${newCurrency}`;
+
+      const fxBadge = document.getElementById('fx-market-badge');
+      if (fxBadge) {
+        if (info.esInterbancaria) {
+          fxBadge.classList.remove('hidden');
+        } else {
+          fxBadge.classList.add('hidden');
+        }
+      }
 
       if (state.tab === 'receive') {
         document.getElementById('amount-label').textContent = `Quiero que lleguen exactos a destino (${info.simbolo} ${newCurrency})`;
@@ -1683,7 +1880,7 @@
 
     /**
      * MOTOR PRINCIPAL DE CÁLCULO EN TIEMPO REAL
-     * Calcula los 3 pasos para el cliente y actualiza el comparador 1 envío vs 2 envíos.
+     * Calcula los 3 pasos con tarifas escalonadas por volumen y actualiza el comparador.
      */
     function recalculate() {
       const N = state.shipments;
@@ -1691,6 +1888,7 @@
       const tasa = state.rate > 0 ? state.rate : infoDest.tasaPorDefecto;
 
       let E_bruto = 0;
+      let tramoActivo = TRAMOS_VOLUMEN[0];
       let comisionNormal = 0;
       let comisionFinal = 0;
       let ahorroDescuento = 0;
@@ -1703,16 +1901,18 @@
       if (state.tab === 'send') {
         // Pestaña 1: Quiero enviar una cantidad en Euros (€)
         E_bruto = state.amount;
+        tramoActivo = obtenerTramoPorMonto(E_bruto);
 
         if (E_bruto > 0) {
-          const rawNormal = (E_bruto * TASA_COMISION_NORMAL) + (FIJO_NORMAL_POR_ENVIO * N);
+          const tasaFinalTramo = tramoActivo.tasaNormal * (1 - FACTOR_DESCUENTO);
+          const rawNormal = (E_bruto * tramoActivo.tasaNormal) + (FIJO_NORMAL_POR_ENVIO * N);
           comisionNormal = Math.round(rawNormal * 100) / 100;
           ahorroDescuento = Math.round((comisionNormal * FACTOR_DESCUENTO) * 100) / 100;
           comisionFinal = Math.round((comisionNormal - ahorroDescuento) * 100) / 100;
           eurosLimpios = Math.round((E_bruto - comisionFinal) * 100) / 100;
 
           if (eurosLimpios <= 0) {
-            const minimoNecesario = ((FIJO_FINAL_POR_ENVIO * N) / (1 - TASA_COMISION_FINAL)) + 0.10;
+            const minimoNecesario = ((FIJO_FINAL_POR_ENVIO * N) / (1 - tasaFinalTramo)) + 0.10;
             minWarningText.textContent = `Para ${N === 1 ? '1 envío' : `${N} envíos`}, ingresa un monto superior a ${fmtEur(minimoNecesario)} para cubrir los costos operativos y enviar saldo neto.`;
             minWarningBox.classList.remove('hidden');
             eurosLimpios = 0;
@@ -1731,13 +1931,36 @@
 
         if (montoDestino > 0) {
           eurosLimpios = Math.round((montoDestino / tasa) * 100) / 100;
-          const brutoEstimado = (eurosLimpios + (FIJO_FINAL_POR_ENVIO * N)) / (1 - TASA_COMISION_FINAL);
-          comisionNormal = Math.round(((brutoEstimado * TASA_COMISION_NORMAL) + (FIJO_NORMAL_POR_ENVIO * N)) * 100) / 100;
+
+          // Resolver el tramo exacto que corresponde al capital bruto necesario
+          const t1Final = TRAMOS_VOLUMEN[0].tasaNormal * (1 - FACTOR_DESCUENTO);
+          const t2Final = TRAMOS_VOLUMEN[1].tasaNormal * (1 - FACTOR_DESCUENTO);
+          const t3Final = TRAMOS_VOLUMEN[2].tasaNormal * (1 - FACTOR_DESCUENTO);
+
+          const cand1 = (eurosLimpios + (FIJO_FINAL_POR_ENVIO * N)) / (1 - t1Final);
+          const cand2 = (eurosLimpios + (FIJO_FINAL_POR_ENVIO * N)) / (1 - t2Final);
+          const cand3 = (eurosLimpios + (FIJO_FINAL_POR_ENVIO * N)) / (1 - t3Final);
+
+          let brutoEstimado = cand1;
+          if (cand1 <= 1500) {
+            tramoActivo = TRAMOS_VOLUMEN[0];
+            brutoEstimado = cand1;
+          } else if (cand2 <= 5000) {
+            tramoActivo = TRAMOS_VOLUMEN[1];
+            brutoEstimado = Math.max(1500.01, cand2);
+          } else {
+            tramoActivo = TRAMOS_VOLUMEN[2];
+            brutoEstimado = Math.max(5000.01, cand3);
+          }
+
+          comisionNormal = Math.round(((brutoEstimado * tramoActivo.tasaNormal) + (FIJO_NORMAL_POR_ENVIO * N)) * 100) / 100;
           ahorroDescuento = Math.round((comisionNormal * FACTOR_DESCUENTO) * 100) / 100;
           comisionFinal = Math.round((comisionNormal - ahorroDescuento) * 100) / 100;
           E_bruto = Math.round((eurosLimpios + comisionFinal) * 100) / 100;
         }
       }
+
+      updateActiveTierUI(tramoActivo.id);
 
       // ===================================================================
       // ACTUALIZAR TARJETAS DE LOS 3 PASOS
@@ -1747,6 +1970,9 @@
         ? `En <strong>1 sola transferencia</strong> desde Europa.`
         : `Dividido en <strong>${N} envíos de ${fmtEur(E_bruto / N)}</strong> cada uno.`;
 
+      document.getElementById('step2-tier-badge').textContent = `${tramoActivo.etiquetaCorta} + 15% DESCUENTO`;
+      document.getElementById('step2-normal-label').textContent =
+        `Tarifa normal ${tramoActivo.nombre} (${fmt(tramoActivo.tasaNormal * 100, 2)}% + ${fmtEur(FIJO_NORMAL_POR_ENVIO)} por envío):`;
       document.getElementById('step2-normal-fee').textContent = fmtEur(comisionNormal);
       document.getElementById('step2-discount-saved').textContent = `-${fmtEur(ahorroDescuento)}`;
       document.getElementById('step2-final-fee').textContent = fmtEur(comisionFinal);
@@ -1769,16 +1995,17 @@
       // ===================================================================
       const montoBaseComparar = E_bruto > 0 ? E_bruto : 1000;
       const mitadMonto = montoBaseComparar / 2;
+      const tramoComparar = obtenerTramoPorMonto(montoBaseComparar);
 
       // Escenario A: 1 solo envío
-      const comisionNormal1Envio = Math.round(((montoBaseComparar * TASA_COMISION_NORMAL) + FIJO_NORMAL_POR_ENVIO) * 100) / 100;
+      const comisionNormal1Envio = Math.round(((montoBaseComparar * tramoComparar.tasaNormal) + FIJO_NORMAL_POR_ENVIO) * 100) / 100;
       const ahorroDto1Envio = Math.round((comisionNormal1Envio * FACTOR_DESCUENTO) * 100) / 100;
       const comision1Envio = Math.round((comisionNormal1Envio - ahorroDto1Envio) * 100) / 100;
       const limpios1Envio = Math.max(0, Math.round((montoBaseComparar - comision1Envio) * 100) / 100);
       const destino1Envio = limpios1Envio * tasa;
 
       // Escenario B: 2 envíos iguales
-      const comisionNormalCadaUnoDe2 = Math.round(((mitadMonto * TASA_COMISION_NORMAL) + FIJO_NORMAL_POR_ENVIO) * 100) / 100;
+      const comisionNormalCadaUnoDe2 = Math.round(((mitadMonto * tramoComparar.tasaNormal) + FIJO_NORMAL_POR_ENVIO) * 100) / 100;
       const ahorroDtoCadaUnoDe2 = Math.round((comisionNormalCadaUnoDe2 * FACTOR_DESCUENTO) * 100) / 100;
       const comisionCadaUnoDe2 = Math.round((comisionNormalCadaUnoDe2 - ahorroDtoCadaUnoDe2) * 100) / 100;
       const comisionTotal2Envios = Math.round((comisionCadaUnoDe2 * 2) * 100) / 100;
@@ -1789,7 +2016,7 @@
       const fijoConDescuento = Math.round(FIJO_FINAL_POR_ENVIO * 100) / 100;
 
       document.getElementById('compare-subtitle').textContent =
-        `Comparación automática para tus ${fmtEur(montoBaseComparar)} (con tu 15% de descuento ya aplicado en ambas opciones):`;
+        `Comparación automática para tus ${fmtEur(montoBaseComparar)} (${tramoComparar.nombre} con 15% de descuento en ambas opciones):`;
 
       document.getElementById('cmp-1-title').textContent = `1 solo envío de ${fmtEur(montoBaseComparar)}`;
       document.getElementById('cmp-save-badge').textContent = `Ahorras ${fmtEur(ahorroAlJuntar)} extra`;
@@ -1804,6 +2031,8 @@
 
       document.getElementById('compare-explanation').innerHTML =
         `<strong>Conclusión:</strong> Al enviar todo en <strong>1 sola transferencia</strong> ahorras <strong>${fmtEur(ahorroAlJuntar)} adicionales</strong> respecto a dividirlo en dos envíos (porque cada transferencia individual lleva un costo fijo operativo de <strong>${fmtEur(fijoConDescuento)}</strong> con tu 15% de descuento).`;
+
+      const switchBtn = document.getElementById('switch-to-1-btn');
       if (state.shipments > 1) {
         switchBtn.textContent = `Elegir 1 solo envío y ahorrar ${fmtEur(ahorroAlJuntar)} adicionales`;
         switchBtn.classList.remove('hidden');
@@ -1815,6 +2044,7 @@
       state.lastCalc = {
         E_bruto,
         N,
+        tramoActivo,
         comisionNormal,
         ahorroDescuento,
         comisionFinal,
@@ -1841,16 +2071,17 @@
         : `(en ${c.N} envíos de ${fmtEur(c.E_bruto / c.N)})`;
 
       const lineas = [
-        `*RESUMEN DE ENVÍO EUROPA → SURAMÉRICA*`,
-        `🎁 *Promoción aplicada: 15% de descuento en la comisión del servicio*`,
+        `*COTIZACIÓN PRIVADA B2B — ENVÍO EUROPA → SURAMÉRICA*`,
+        `🎁 *Beneficio aplicado:* ${c.tramoActivo.nombre} + *15% de descuento*`,
         ``,
         `1️⃣ *Tú envías desde Europa:* ${fmtEur(c.E_bruto)} ${detalleEnvios}`,
         `2️⃣ *Comisión total (siempre en Euros €):* ${fmtEur(c.comisionFinal)}`,
         `   _(Tarifa normal: ${fmtEur(c.comisionNormal)} | Tu descuento 15%: -${fmtEur(c.ahorroDescuento)})_`,
         `3️⃣ *Tu destinatario recibe neto en Suramérica:* *${fmtDest(c.montoDestino, c.currency)}*`,
-        `   _(Tasa aplicada: 1 € = ${fmt(c.tasa, c.infoDest.decimalesTasa)} ${c.infoDest.simbolo})_`,
+        `   _(Tasa de mercado aplicada: 1 € = ${fmt(c.tasa, c.infoDest.decimalesTasa)} ${c.infoDest.simbolo})_`,
         ``,
-        `✅ *Dinero limpio a recibir, libre de descuentos adicionales.*`
+        `✅ *Dinero limpio a recibir, libre de descuentos adicionales.*`,
+        `🔒 _Operación sujeta a validación previa KYC/AML y origen de fondos._`
       ];
 
       const texto = lineas.join('\n');
