@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cotizador Simple — Envíos Europa a Suramérica</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Simulador Ilustrativo — Estimación Referencial de Costos</title>
   <style>
     /* =====================================================================
        VARIABLES VISUALES Y ESTILOS BASE (DISEÑO CLARO Y DE ALTO CONTRASTE)
@@ -71,6 +73,145 @@
       margin: 0 auto;
       padding-left: 1.125rem;
       padding-right: 1.125rem;
+    }
+
+    /* =====================================================================
+       AVISO LEGAL SUPERIOR Y CLÁUSULA DE EXENCIÓN DE RESPONSABILIDAD
+       ===================================================================== */
+    .legal-top-strip {
+      background-color: #060b16;
+      color: #e2e8f0;
+      border-bottom: 1px solid #1e293b;
+      padding: 0.55rem 0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
+
+    .legal-top-strip strong {
+      color: #fbbf24;
+      font-weight: 800;
+    }
+
+    .legal-box {
+      margin-top: 1.5rem;
+      background-color: var(--white);
+      border: 1.5px solid #cbd5e1;
+      border-left: 4px solid var(--navy-900);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.375rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .legal-box-title {
+      font-size: 0.875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy-900);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .legal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--slate-700);
+      line-height: 1.5;
+    }
+
+    .legal-list li strong {
+      color: var(--navy-900);
+    }
+
+    .ack-bar {
+      margin-top: 1.25rem;
+      background-color: var(--amber-50);
+      border: 1.5px solid var(--amber-200);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.8125rem;
+      color: var(--navy-900);
+      cursor: pointer;
+    }
+
+    .ack-bar input[type="checkbox"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      margin-top: 0.15rem;
+      accent-color: var(--navy-900);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Modal inicial de lectura obligatoria */
+    .legal-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background-color: rgba(11, 19, 36, 0.78);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .legal-modal-card {
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      max-width: 34rem;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    .legal-modal-title {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      margin-bottom: 0.65rem;
+    }
+
+    .legal-modal-body {
+      font-size: 0.835rem;
+      color: var(--slate-700);
+      line-height: 1.55;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-height: 55vh;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+
+    .legal-modal-btn {
+      margin-top: 1.15rem;
+      width: 100%;
+      appearance: none;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 800;
+      background-color: var(--navy-900);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+    }
+
+    .legal-modal-btn:hover {
+      background-color: var(--navy-800);
     }
 
     /* =====================================================================
@@ -1080,8 +1221,17 @@
       .no-print,
       #controls-panel,
       #bottom-actions-bar,
+      #ack-container,
+      #legal-gate-modal,
       #toast-notification {
         display: none !important;
+      }
+
+      .legal-box {
+        break-inside: avoid;
+        box-shadow: none !important;
+        margin-top: 1rem !important;
+        padding: 0.9rem 1rem !important;
       }
 
       .main-grid {
@@ -1104,7 +1254,16 @@
 <body>
 
   <!-- ===================================================================== -->
-  <!-- ENCABEZADO SIMPLE Y CLARO                                             -->
+  <!-- CINTA SUPERIOR DE AVISO LEGAL Y CARÁCTER ILUSTRATIVO                  -->
+  <!-- ===================================================================== -->
+  <div class="legal-top-strip" role="note">
+    <div class="container">
+      <strong>SOLUCIÓN PROPUESTA SOLO PARA FINES ILUSTRATIVOS:</strong> Simulador matemático referencial no vinculante. No constituye oferta pública ni servicio financiero regulado.
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- ENCABEZADO LIMPIO Y CLARO                                             -->
   <!-- ===================================================================== -->
   <header class="header">
     <div class="container">
@@ -1116,18 +1275,18 @@
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
             </svg>
           </span>
-          <span>Gestión Privada B2B • Envíos Europa → Suramérica</span>
+          <span>Uso Privado y Confidencial • Simulación Ilustrativa Bilateral</span>
         </div>
 
         <div class="offer-badge-top">
           <span class="offer-dot"></span>
-          <span>Promoción activa: 15% de descuento + tarifas escalonadas por volumen</span>
+          <span>Escenario ilustrativo: Bonificación referencial del 15% + tramos por volumen</span>
         </div>
       </div>
 
-      <h1 class="header-title">Cotizador Simple — Envíos Europa a Suramérica</h1>
+      <h1 class="header-title">Simulador Ilustrativo — Estimación Referencial de Costos</h1>
       <p class="header-subtitle">
-        Calcula en 3 pasos cuántos euros envías, tu tarifa preferencial según volumen con 15% de descuento y el importe neto garantizado en destino a tasa de mercado
+        Solución propuesta exclusivamente para fines ilustrativos y de cálculo preliminar. Los importes, tasas y porcentajes mostrados son estimaciones matemáticas referenciales sin carácter vinculante.
       </p>
     </div>
   </header>
@@ -1331,48 +1490,69 @@
         <!-- PASO 1: Azul Marino -->
         <article class="step-card step-1">
           <div class="step-header">
-            <span class="step-pill">Paso 1</span>
+            <span class="step-pill">Paso 1 • Referencia</span>
             <span style="font-size: 0.75rem; color: #94a3b8; font-weight: 600;">Siempre en Euros (€)</span>
           </div>
-          <h2 class="step-title">Tú envías desde Europa</h2>
+          <h2 class="step-title">Capital de referencia en origen (Europa)</h2>
           <div id="step1-amount" class="step-amount tabular-nums">1.000,00 €</div>
-          <p id="step1-note" class="step-note">En <strong>1 sola transferencia</strong> desde Europa.</p>
+          <p id="step1-note" class="step-note">Simulado en <strong>1 sola transferencia</strong> referencial desde Europa.</p>
         </article>
 
         <!-- PASO 2: Ámbar / Verde Suave (Comisión ÚNICAMENTE en Euros con 15% de descuento) -->
         <article class="step-card step-2">
           <div class="step-header">
-            <span class="step-pill">Paso 2</span>
-            <span id="step2-tier-badge" class="discount-chip">TRAMO 1 ESTÁNDAR + 15% DESCUENTO</span>
+            <span class="step-pill">Paso 2 • Estimación</span>
+            <span id="step2-tier-badge" class="discount-chip">TRAMO 1 ESTÁNDAR + 15% DTO. ILUSTRATIVO</span>
           </div>
-          <h2 class="step-title">Comisión total del servicio (con 15% de descuento)</h2>
+          <h2 class="step-title">Estimación referencial de gastos y gestión (15% dto. ilustrativo)</h2>
 
           <div class="fee-breakdown">
             <div class="fee-line fee-line-normal">
-              <span id="step2-normal-label">Tarifa normal Tramo 1 (4,10% + 5,90 € por envío):</span>
+              <span id="step2-normal-label">Tarifa base referencial Tramo 1 (4,10% + 5,90 € por envío):</span>
               <del id="step2-normal-fee" class="tabular-nums">46,90 €</del>
             </div>
 
             <div class="fee-line fee-line-discount">
-              <span>Tu descuento promocional (15%):</span>
+              <span>Bonificación ilustrativa aplicada (15%):</span>
               <span id="step2-discount-saved" class="tabular-nums">-7,04 €</span>
             </div>
 
             <div class="fee-line fee-line-final">
-              <span class="lbl">Comisión final a pagar:</span>
+              <span class="lbl">Estimación de costo total (EUR):</span>
               <span id="step2-final-fee" class="val tabular-nums">39,86 €</span>
             </div>
           </div>
 
           <p id="step2-per-shipment-note" class="fee-sub-split hidden tabular-nums">
-            (Equivale a 22,44 € de comisión por cada envío de 500,00 €)
+            (Equivale a 22,44 € estimados por cada envío de 500,00 €)
           </p>
 
           <p class="fee-reassurance">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
-            <span>Toda la comisión se expresa en Euros (€) y nunca se suma ni confunde con los Dólares ($) de destino.</span>
+            <span>Cálculo ilustrativo expresado exclusivamente en Euros (€), separado de la divisa referencial de destino.</span>
+          </p>
+        </article>
+
+        <!-- PASO 3: Verde Esmeralda Destacado -->
+        <article class="step-card step-3">
+          <div class="step-header">
+            <span class="step-pill">Paso 3 • Resultado Ilustrativo</span>
+            <span id="step3-currency-tag" style="font-size: 0.75rem; color: #d1fae5; font-weight: 700;">Moneda en destino: Dólares Americanos (USD $)</span>
+          </div>
+          <h2 class="step-title">Estimación neta referencial en destino (Suramérica)</h2>
+          <div id="step3-amount" class="step-amount tabular-nums">1.051,35 $</div>
+          <p id="step3-math-detail" class="step-math tabular-nums">
+            960,14 € netos estimados × tasa referencial 1,095 = 1.051,35 $
+          </p>
+          <p class="step-guarantee">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span>Cifra estrictamente ilustrativa, no vinculante y sujeta a validación previa.</span>
           </p>
         </article>
 
@@ -1401,15 +1581,114 @@
     </div>
 
     <!-- =================================================================== -->
-    <!-- TARJETA COMPARATIVA: ¿ENVIAR TODO JUNTO O DIVIDIDO EN 2 ENVÍOS?     -->
+    <!-- CLÁUSULA INTEGRAL DE EXENCIÓN DE RESPONSABILIDAD Y ALCANCE LEGAL    -->
     <!-- =================================================================== -->
-    <section class="compare-section" aria-label="Comparador de 1 envío frente a 2 envíos">
-      <div class="compare-header">
-        <h2 class="compare-title">¿Enviar todo junto o dividido en 2 envíos?</h2>
-        <p id="compare-subtitle" class="compare-subtitle tabular-nums">
-          Comparación automática para tus 1.000,00 € (con tu 15% de descuento ya aplicado en ambas opciones):
+    <section class="legal-box" aria-label="Aviso legal y exención de responsabilidad">
+      <h2 class="legal-box-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>Aviso Legal, Exención de Responsabilidad y Alcance Ilustrativo</span>
+      </h2>
+      <ul class="legal-list">
+        <li>
+          <strong>1. Fines Exclusivamente Ilustrativos y No Vinculantes:</strong> Esta aplicación y los resultados que genera se proporcionan <em>únicamente con fines ilustrativos, informativos y de simulación matemática preliminar</em>. Ningún importe, porcentaje o tipo de cambio constituye oferta comercial firme, cotización vinculante, promesa de ejecución ni relación contractual.
+        </li>
+        <li>
+          <strong>2. Ausencia de Intermediación Financiera Regulada:</strong> Esta herramienta no representa la prestación pública ni profesional de servicios bancarios, servicios de pago (Directiva UE 2015/2366 - PSD2), emisión de dinero electrónico ni servicios sobre criptoactivos (Reglamento UE 2023/1114 - MiCA). El titular no actúa como entidad de crédito, entidad de pago, casa de cambio ni custodio de fondos del público.
+        </li>
+        <li>
+          <strong>3. Variabilidad de Mercado y Proveedores Externos:</strong> Las tasas de cambio y estimaciones de costos operativos mostradas son meramente referenciales y están sujetas a fluctuaciones de mercado, disponibilidad de liquidez y tarifas de terceros vigentes al momento de cualquier eventual acuerdo bilateral formalizado por separado.
+        </li>
+        <li>
+          <strong>4. Cumplimiento Normativo (KYC/AML) y Origen Lícito:</strong> Toda eventual colaboración o gestión privada entre partes previamente identificadas queda estrictamente condicionada a la verificación documental previa de identidad, actividad económica y origen lícito de los fondos, conforme a la legislación vigente de prevención del blanqueo de capitales y financiación del terrorismo.
+        </li>
+        <li>
+          <strong>5. Uso Privado y Prohibición de Difusión Pública:</strong> Documento confidencial preparado exclusivamente para evaluación bilateral. Queda expresamente prohibida su publicación abierta, indexación en buscadores, reproducción no autorizada o presentación a terceros como oferta financiera al público.
+        </li>
+      </ul>
+
+      <label id="ack-container" class="ack-bar no-print" for="legal-ack-checkbox">
+        <input id="legal-ack-checkbox" type="checkbox" checked />
+        <span>
+          <strong>Confirmación de lectura:</strong> Reconozco que esta solución es propuesta <strong>solo para fines ilustrativos</strong>, carece de validez contractual vinculante y no constituye oferta de servicios financieros o cambiarios regulados.
+        </span>
+      </label>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- BARRA INFERIOR DE ACCIONES                                          -->
+    <!-- =================================================================== -->
+    <div id="bottom-actions-bar" class="bottom-actions no-print">
+      <button type="button" class="btn-whatsapp" onclick="copyWhatsAppSummary()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>Copiar simulación ilustrativa</span>
+      </button>
+
+      <button type="button" class="btn-print" onclick="printWithLegalCheck()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span>Imprimir / Guardar PDF</span>
+      </button>
+
+      <button type="button" class="btn-reset" onclick="resetCalculator()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        <span>Restablecer</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- PIE DE PÁGINA                                                         -->
+  <!-- ===================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div><strong>AVISO:</strong> Solución propuesta exclusivamente para fines ilustrativos y de estimación preliminar • Documento confidencial de uso bilateral.</div>
+      <div class="footer-compliance">
+        Los valores presentados no constituyen oferta vinculante, compromiso de ejecución ni prestación de servicios financieros o cambiarios regulados. Sujeto a validación previa KYC/AML y verificación de origen lícito de fondos.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Inicial de Aviso Legal (Garantiza lectura previa) -->
+  <div id="legal-gate-modal" class="legal-modal-backdrop no-print" role="dialog" aria-modal="true" aria-labelledby="legal-modal-heading">
+    <div class="legal-modal-card">
+      <h2 id="legal-modal-heading" class="legal-modal-title">Aviso Legal — Uso Exclusivamente Ilustrativo</h2>
+      <div class="legal-modal-body">
+        <p>
+          Esta herramienta constituye <strong>únicamente un simulador matemático propuesto solo para fines ilustrativos</strong> y de estimación preliminar entre partes previamente identificadas.
+        </p>
+        <p>
+          • <strong>Sin carácter vinculante:</strong> Los importes, porcentajes y tasas mostrados son meramente referenciales y no constituyen oferta pública, cotización firme ni compromiso contractual.
+        </p>
+        <p>
+          • <strong>Sin intermediación financiera:</strong> Esta aplicación no presta servicios bancarios, de pago (PSD2), dinero electrónico ni servicios sobre criptoactivos (MiCA), ni realiza captación de fondos del público.
+        </p>
+        <p>
+          • <strong>Cumplimiento y confidencialidad:</strong> Cualquier eventual gestión privada requiere validación documental previa (KYC/AML) y prohibe la difusión pública de este archivo.
         </p>
       </div>
+      <button type="button" class="legal-modal-btn" onclick="acceptInitialLegalNotice()">
+        Comprendo — Acceder al simulador ilustrativo
+      </button>
+    </div>
+  </div>
+
+  <!-- Notificación Flotante -->
+  <div id="toast-notification" class="toast-box no-print" role="status" aria-live="polite">
+    <span class="offer-dot"></span>
+    <span id="toast-text">Simulación ilustrativa copiada con aviso legal</span>
+  </div>
 
       <div class="compare-grid">
         <!-- Opción A: 1 solo envío -->
@@ -2057,31 +2336,63 @@
     }
 
     /**
-     * Copia al portapapeles un resumen limpio, claro y amigable listo para WhatsApp.
+     * Cierra el modal inicial tras confirmar la lectura del aviso legal.
+     */
+    function acceptInitialLegalNotice() {
+      const modal = document.getElementById('legal-gate-modal');
+      const checkbox = document.getElementById('legal-ack-checkbox');
+      if (checkbox) checkbox.checked = true;
+      if (modal) modal.classList.add('hidden');
+    }
+
+    /**
+     * Verifica la casilla de aceptación legal antes de exportar o imprimir.
+     */
+    function ensureLegalAcknowledged() {
+      const checkbox = document.getElementById('legal-ack-checkbox');
+      if (checkbox && !checkbox.checked) {
+        checkbox.focus();
+        showToast('Marca la casilla de confirmación legal antes de exportar.');
+        return false;
+      }
+      return true;
+    }
+
+    /**
+     * Ejecuta la impresión verificando antes el reconocimiento legal.
+     */
+    function printWithLegalCheck() {
+      if (!ensureLegalAcknowledged()) return;
+      window.print();
+    }
+
+    /**
+     * Copia al portapapeles un resumen ilustrativo con cláusula legal inseparable.
      */
     function copyWhatsAppSummary() {
+      if (!ensureLegalAcknowledged()) return;
+
       const c = state.lastCalc;
       if (!c || c.E_bruto <= 0 || c.montoDestino <= 0) {
-        showToast('Ingresa un monto válido para copiar el resumen.');
+        showToast('Ingresa un monto válido para copiar la simulación.');
         return;
       }
 
       const detalleEnvios = c.N === 1
-        ? '(en 1 sola transferencia)'
-        : `(en ${c.N} envíos de ${fmtEur(c.E_bruto / c.N)})`;
+        ? '(escenario de 1 sola transferencia)'
+        : `(escenario de ${c.N} envíos de ${fmtEur(c.E_bruto / c.N)})`;
 
       const lineas = [
-        `*COTIZACIÓN PRIVADA B2B — ENVÍO EUROPA → SURAMÉRICA*`,
-        `🎁 *Beneficio aplicado:* ${c.tramoActivo.nombre} + *15% de descuento*`,
+        `*SIMULACIÓN ILUSTRATIVA — ESTIMACIÓN REFERENCIAL (NO VINCULANTE)*`,
+        `⚠️ _Solución propuesta solo para fines ilustrativos y de cálculo preliminar._`,
         ``,
-        `1️⃣ *Tú envías desde Europa:* ${fmtEur(c.E_bruto)} ${detalleEnvios}`,
-        `2️⃣ *Comisión total (siempre en Euros €):* ${fmtEur(c.comisionFinal)}`,
-        `   _(Tarifa normal: ${fmtEur(c.comisionNormal)} | Tu descuento 15%: -${fmtEur(c.ahorroDescuento)})_`,
-        `3️⃣ *Tu destinatario recibe neto en Suramérica:* *${fmtDest(c.montoDestino, c.currency)}*`,
-        `   _(Tasa de mercado aplicada: 1 € = ${fmt(c.tasa, c.infoDest.decimalesTasa)} ${c.infoDest.simbolo})_`,
+        `1️⃣ *Capital de referencia en origen (EUR):* ${fmtEur(c.E_bruto)} ${detalleEnvios}`,
+        `2️⃣ *Estimación de gastos operativos (en Euros €):* ${fmtEur(c.comisionFinal)}`,
+        `   _(Tarifa base referencial: ${fmtEur(c.comisionNormal)} | Bonificación ilustrativa 15%: -${fmtEur(c.ahorroDescuento)})_`,
+        `3️⃣ *Estimación neta referencial en destino:* *${fmtDest(c.montoDestino, c.currency)}*`,
+        `   _(Tasa referencial aplicada: 1 € = ${fmt(c.tasa, c.infoDest.decimalesTasa)} ${c.infoDest.simbolo})_`,
         ``,
-        `✅ *Dinero limpio a recibir, libre de descuentos adicionales.*`,
-        `🔒 _Operación sujeta a validación previa KYC/AML y origen de fondos._`
+        `📌 *AVISO LEGAL:* Los importes mostrados son estimaciones matemáticas referenciales sin validez contractual ni compromiso de ejecución. No constituye oferta pública ni servicio financiero regulado. Sujeto a validación previa KYC/AML y origen lícito de fondos.`
       ];
 
       const texto = lineas.join('\n');
@@ -2097,7 +2408,7 @@
       try {
         const copiado = document.execCommand('copy');
         if (copiado) {
-          showToast('Resumen copiado listo para pegar en WhatsApp');
+          showToast('Simulación ilustrativa copiada con aviso legal incluido');
         } else {
           showToast('No se pudo copiar automáticamente al portapapeles.');
         }
